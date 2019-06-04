@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { TradingBookComponent } from './trading-book/trading-book.component';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TradingBookComponent
+    TradingBookComponent,
+    HeaderComponent
   ],
   imports: [
     AppRoutingModule,
