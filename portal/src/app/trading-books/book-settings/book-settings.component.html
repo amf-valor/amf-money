@@ -1,26 +1,34 @@
-<h1 mat-dialog-title>Novo book de ofertas</h1>
-<form fxLayout="column" fxLayoutGap="1.2rem" mat-dialog-content [formGroup]="bookSettingsForm" novalidate>
-  <amp-input 
-    errorMessage="Informar o nome do book de ofertas é obrigatório"
-    placeholder="Nome do book" 
-    [parentFormGroup]="bookSettingsForm"
-    controlName="bookName">
-  </amp-input>
-  <mat-form-field>
-    <input formControlName="amountPerCaptal" type="number" matInput placeholder="% Concentração de capital por boleta">
-    <mat-error *ngIf="bookSettingsForm.controls['amountPerCaptal'].hasError('required')">
-      Informar a porcentagem de capital por boleta é obrigatório
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <input type="number" formControlName="riskGainRelationship" matInput placeholder="Relação risco ganho">
-    <mat-error *ngIf="bookSettingsForm.controls['riskGainRelationship'].hasError('required')">
-      Informar a relação risco ganho do book é obrigatório
-    </mat-error>
-  </mat-form-field>
-</form>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoBtnClick()">Agora Não!</button>
-  <button mat-raised-button color="primary" cdkFocusInitial>Ok</button>
-</div>
+<section>
+  <h1 mat-dialog-title>Novo book de ofertas</h1>
+  <form fxLayout="column" fxLayoutGap="1.2rem" mat-dialog-content [formGroup]="bookSettingsForm" novalidate>
+    <amp-input
+      class="full-width"
+      errorMessage="Informar o nome do book de ofertas é obrigatório"
+      placeholder="Nome do book" 
+      [parentFormGroup]="bookSettingsForm"
+      controlName="bookName">
+    </amp-input>
+    <amp-input
+      class="full-width" 
+      errorMessage="Informar a porcentagem de capital por boleta é obrigatório"
+      controlName="amountPerCaptal" 
+      type="number"
+      placeholder="% Concentração de capital por boleta"
+      [parentFormGroup]="bookSettingsForm">
+    </amp-input>
+    <amp-input 
+      class="full-width"
+      errorMessage="Informar a relação risco ganho do book é obrigatório"
+      type="number" 
+      controlName="riskGainRelationship" 
+      placeholder="Relação risco ganho"
+      [parentFormGroup]="bookSettingsForm">
+    </amp-input>
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
+      <button mat-button (click)="onNoBtnClick()">Agora Não!</button>
+      <button mat-raised-button color="primary" cdkFocusInitial>Ok</button>
+    </div>
+  </form>
+</section>
+
 

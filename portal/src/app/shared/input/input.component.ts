@@ -13,6 +13,7 @@ export class InputComponent implements OnInit, AfterContentInit {
   @Input() placeholder: string
   @Input() parentFormGroup: FormGroup
   @Input() controlName: string
+  @Input() class: string
   
   private control: AbstractControl
 
