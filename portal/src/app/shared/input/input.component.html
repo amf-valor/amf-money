@@ -1,0 +1,6 @@
+<mat-form-field [formGroup]="parentFormGroup">
+  <input matInput placeholder="{{placeholder}}" formControlName="{{controlName}}" type="{{type}}"/>
+  <mat-error *ngIf="hasError()">
+    {{errorMessage}}
+  </mat-error>
+</mat-form-field>
