@@ -14,6 +14,7 @@ export class InputComponent implements OnInit, AfterContentInit {
   @Input() parentFormGroup: FormGroup
   @Input() controlName: string
   @Input() class: string
+  @Input() min: number
   
   private control: AbstractControl
 

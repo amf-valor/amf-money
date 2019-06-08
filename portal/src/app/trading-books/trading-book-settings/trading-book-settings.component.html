@@ -13,6 +13,7 @@
       errorMessage="Informar a porcentagem de capital por boleta é obrigatório"
       controlName="amountPerCaptal" 
       type="number"
+      min="1"
       placeholder="% Concentração de capital por boleta"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
@@ -20,13 +21,18 @@
       class="full-width"
       errorMessage="Informar a relação risco ganho do book é obrigatório"
       type="number" 
+      min="1"
       controlName="riskGainRelationship" 
       placeholder="Relação risco ganho"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
     <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
       <button mat-button (click)="onNoBtnClick()">Agora Não!</button>
-      <button mat-raised-button color="primary" cdkFocusInitial>Ok</button>
+      <button mat-raised-button 
+              color="primary" 
+              (click)="onOkBtnClick()" 
+              cdkFocusInitial
+              [disabled]="!bookSettingsForm.valid">Ok</button>
     </div>
   </form>
 </section>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { BookSettingsComponent } from './book-settings/book-settings.component';
+import { TradingBookSettingsComponent } from './trading-book-settings/trading-book-settings.component';
 
 @Component({
   selector: 'amp-trading-books',
@@ -19,7 +19,7 @@ export class TradingBooksComponent implements OnInit {
   }
 
   onCreateBookBtnClick(): void{
-      this.dialog.open(BookSettingsComponent,{
+      this.dialog.open(TradingBookSettingsComponent,{
        
       })
   }
