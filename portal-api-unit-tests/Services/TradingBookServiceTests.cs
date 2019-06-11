@@ -1,6 +1,7 @@
-﻿using AmfValor.AmfMoney.PortalApi.Model;
+﻿using AmfValor.AmfMoney.PortalApi.Data;
+using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services;
-using System;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace PortalApi.UnitTests.Services
@@ -11,7 +12,11 @@ namespace PortalApi.UnitTests.Services
 
         public TradingBookServiceTests()
         {
-            tradingBookService = new TradingBookService();
+            var options = new DbContextOptionsBuilder<AmfMoneyContext>()
+                .UseInMemoryDatabase(databaseName: "amf_money")
+                .Options;
+
+            tradingBookService = new TradingBookService(new AmfMoneyContext(options));
         }
 
         [Fact]

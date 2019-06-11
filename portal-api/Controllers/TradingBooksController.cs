@@ -17,6 +17,9 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] TradingBook tradingBook)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             TradingBook created = service.Create(tradingBook);
             return Ok(created);
         }
