@@ -26,7 +26,7 @@ namespace PortalApi.UnitTests.Services
             {
                 AmountPerCaptal = 20,
                 Name = "Test",
-                RiskGainRelationship = 3
+                RiskRewardRatio = 3
             };
 
             TradingBook actual = tradingBookService.Create(toBeCreated);
@@ -34,7 +34,7 @@ namespace PortalApi.UnitTests.Services
             Assert.True(actual.Id > 0);
             Assert.Equal(0.20, actual.AmountPerCaptal);
             Assert.Equal(toBeCreated.Name, actual.Name);
-            Assert.Equal(toBeCreated.RiskGainRelationship, actual.RiskGainRelationship);
+            Assert.Equal(toBeCreated.RiskRewardRatio, actual.RiskRewardRatio);
             Assert.NotEqual(default, actual.CreatedAt);
         }
     }

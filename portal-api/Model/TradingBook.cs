@@ -13,7 +13,7 @@ namespace AmfValor.AmfMoney.PortalApi.Model
         public double AmountPerCaptal { get; set; }
         [Required]
         [Range(1, int.MaxValue)]
-        public int RiskGainRelationship { get; set; }
+        public int RiskRewardRatio { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

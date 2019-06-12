@@ -35,7 +35,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<sbyte>("RiskGainRelationship")
+                    b.Property<sbyte>("RiskRewardRatio")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");

@@ -22,7 +22,7 @@ namespace AmfValor.AmfMoney.PortalApi.Data
                 .HasColumnType("decimal(2,2)")
                 .IsRequired();
 
-            builder.Property(t => t.RiskGainRelationship)
+            builder.Property(t => t.RiskRewardRatio)
                 .HasColumnType("tinyint(1)")
                 .IsRequired();
 

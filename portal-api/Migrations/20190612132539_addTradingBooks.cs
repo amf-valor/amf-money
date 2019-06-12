@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AmfValor.AmfMoney.PortalApi.Migrations
 {
-    public partial class amf_money_dev : Migration
+    public partial class addTradingBooks : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     AmountPerCaptal = table.Column<decimal>(type: "decimal(2,2)", nullable: false),
-                    RiskGainRelationship = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
+                    RiskRewardRatio = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
