@@ -25,12 +25,12 @@ describe('ApiPortalService', () => {
 
   it('should create new trading book', () => {
     const service: PortalApiService = TestBed.get(PortalApiService);
-    const settings: TradingBookSettings = { name: "bookTest", amountPerCaptal: 15, riskGainRelationship: 3}
+    const settings: TradingBookSettings = { name: "bookTest", amountPerCaptal: 15, riskRewardRatio: 3}
     
     service.createTradingBook(settings).subscribe(tradingBook =>{
       expect(tradingBook.settings.name).toEqual(settings.name)
       expect(tradingBook.settings.amountPerCaptal).toEqual(0.15)
-      expect(tradingBook.settings.riskGainRelationship).toEqual(settings.riskGainRelationship)
+      expect(tradingBook.settings.riskRewardRatio).toEqual(settings.riskRewardRatio)
     })
 
     const req = httpMock.expectOne(`${environment.PORTAL_API_ADDRESS}/tradingBooks`)

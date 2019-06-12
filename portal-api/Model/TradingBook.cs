@@ -9,10 +9,10 @@ namespace AmfValor.AmfMoney.PortalApi.Model
         [Required]
         public string Name { get; set; }
         [Required]
-        [Range(1, 5)]
+        [Range(1, 50)]
         public double AmountPerCaptal { get; set; }
         [Required]
-        [Range(1, int.MaxValue)]
+        [Range(1, 9999)]
         public int RiskRewardRatio { get; set; }
         public DateTime CreatedAt { get; set; }
     }

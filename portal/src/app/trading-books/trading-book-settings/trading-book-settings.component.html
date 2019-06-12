@@ -3,26 +3,28 @@
   <form fxLayout="column" fxLayoutGap="1.2rem" mat-dialog-content [formGroup]="bookSettingsForm" novalidate>
     <amp-input
       class="full-width"
-      errorMessage="Informar o nome do book de ofertas é obrigatório"
+      [errorMessages]="controlErrorMessages.get(bookName)"
       placeholder="Nome do book" 
       [parentFormGroup]="bookSettingsForm"
-      controlName="bookName">
+      [controlName]="bookName">
     </amp-input>
     <amp-input
       class="full-width" 
-      errorMessage="Informar a porcentagem de capital por boleta é obrigatório"
-      controlName="amountPerCaptal" 
+      [errorMessages]="controlErrorMessages.get(amountPerCaptal)"
+      [controlName]="amountPerCaptal" 
       type="number"
-      min="1"
+      [min]=amountPerCaptalMin
+      [max]=amountPerCaptalMax
       placeholder="% Concentração de capital por boleta"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
     <amp-input 
       class="full-width"
-      errorMessage="Informar a relação risco ganho do book é obrigatório"
+      [errorMessages]="controlErrorMessages.get(riskRewardRatio)"
       type="number" 
-      min="1"
-      controlName="riskGainRelationship" 
+      [min]=riskRewardRatioMin
+      [max]=riskRewardRatioMax
+      [controlName]=riskRewardRatio 
       placeholder="Relação risco ganho"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
@@ -31,7 +33,6 @@
       <button mat-raised-button 
               color="primary" 
               (click)="onOkBtnClick()" 
-              cdkFocusInitial
               [disabled]="!bookSettingsForm.valid">Ok</button>
     </div>
   </form>

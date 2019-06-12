@@ -1,5 +1,6 @@
 export interface TradingBookSettings{
-    name: string
-    amountPerCaptal: number
-    riskGainRelationship: number
+    id ?: number
+    name : string
+    amountPerCaptal : number
+    riskRewardRatio : number
 }

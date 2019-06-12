@@ -2,7 +2,8 @@
   <input matInput placeholder="{{placeholder}}" 
          formControlName="{{controlName}}" 
          type="{{type}}"
-         min="{{min}}"/>
+         min="{{min}}"
+         max="{{max}}"/>
   <mat-error *ngIf="hasError()">
     {{errorMessage}}
   </mat-error>

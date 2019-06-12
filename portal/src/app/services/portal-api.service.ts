@@ -14,25 +14,15 @@ export class PortalApiService {
   constructor(private httpClient: HttpClient) { }
 
   createTradingBook(tradingBookSettings: TradingBookSettings) : Observable<TradingBook>{
-    const tradingBook = { 
-      name: tradingBookSettings.name,
-      amountPerCaptal: tradingBookSettings.amountPerCaptal / 100,
-      riskGainRelationship: tradingBookSettings.riskGainRelationship
-    }
-
     const httpHeaders = { 'Content-Type': 'application/json'}
 
-    return this.httpClient.post(`${environment.PORTAL_API_ADDRESS}/tradingBooks`,
-                                JSON.stringify(tradingBook),
+    return this.httpClient.post<TradingBookSettings>(`${environment.PORTAL_API_ADDRESS}/tradingBooks`,
+                                JSON.stringify(tradingBookSettings),
                                 {headers: httpHeaders})
                           .pipe(
                             map(res => {
                               const newTradingBook:TradingBook = {
-                                settings: {
-                                  name: tradingBook.name,
-                                  amountPerCaptal: tradingBook.amountPerCaptal,
-                                  riskGainRelationship: tradingBook.riskGainRelationship
-                                }
+                                settings: res
                               }
                               return newTradingBook
                             })

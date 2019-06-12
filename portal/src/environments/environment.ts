@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  PORTAL_API_ADDRESS: "http://localhost:5000/api"
+  PORTAL_API_ADDRESS: "https://localhost:5001/api"
 };
 
 /*
