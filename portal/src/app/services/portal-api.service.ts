@@ -28,4 +28,12 @@ export class PortalApiService {
                             })
                           )
   }
+  
+  getAllTradingBooks(): Observable<TradingBook[]>{
+    const httpHeaders = { 'Content-Type': 'application/json'}
+    
+    return this.httpClient.get<TradingBook[]>(
+      `${environment.PORTAL_API_ADDRESS}/tradingBooks`, 
+      {headers: httpHeaders})                    
+  }
 }

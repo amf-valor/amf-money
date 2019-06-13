@@ -1,6 +1,8 @@
 ﻿using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace AmfValor.AmfMoney.PortalApi.Controllers
 {
@@ -25,6 +27,16 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get() => Ok();
+        public IActionResult Get() => Ok(new List<TradingBook>()
+        {
+            new TradingBook()
+            {
+                Id = 1,
+                AmountPerCaptal = 0.15,
+                Name = "Book Mock",
+                RiskRewardRatio = 4,
+                CreatedAt = DateTime.UtcNow
+            }       
+        });
     }
 }

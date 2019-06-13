@@ -3,6 +3,7 @@ import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortalApiService } from 'src/app/services/portal-api.service';
 import { TradingBookSettings } from './trading-book-settings.model';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'amp-book-settings',
@@ -14,6 +15,7 @@ export class TradingBookSettingsComponent implements OnInit {
   static readonly BOOK_NAME: string = 'bookName'
   static readonly AMOUNT_PER_CAPTAL: string = 'amountPerCaptal'
   static readonly RISK_REWARD_RATIO: string = 'riskRewardRatio'
+
   bookSettingsForm: FormGroup
   controlErrorMessages: Map<string, Map<string, string>>
   
@@ -21,7 +23,7 @@ export class TradingBookSettingsComponent implements OnInit {
     private dialogRef: MatDialogRef<TradingBookSettingsComponent>, 
     private formBuilder: FormBuilder,
     private portalApiService: PortalApiService,
-    private snackBarRef: MatSnackBar) { }
+    private utilsService: UtilsService) { }
 
   ngOnInit() {
     this.initBookSettingsForm()
@@ -73,12 +75,11 @@ export class TradingBookSettingsComponent implements OnInit {
       riskRewardRatio: this.bookSettingsForm.get(this.riskRewardRatio).value
     }
     
-    this.portalApiService.createTradingBook(settings).subscribe(() => {
-      this.dialogRef.close();
+    this.portalApiService.createTradingBook(settings).subscribe(tradingBook => {
+      this.dialogRef.close(tradingBook);
     }, err => {
-      this.snackBarRef.open('Oops! Houve um problema com nossos servidores tente novamente mais tarde!', 
-      'entendi!', { duration: 5000})
-      console.log(err);
+      this.utilsService.showGenericError()
+      console.log(err)
     })
   }
 

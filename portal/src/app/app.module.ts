@@ -7,6 +7,7 @@ import { TradingBookSettingsComponent } from './trading-books/trading-book-setti
 import { SharedModule } from './shared/shared.module';
 import { TradingBookComponent } from './trading-books/trading-book/trading-book.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     AppRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    AgGridModule.withComponents([])
   ],
   entryComponents:[
     TradingBookSettingsComponent
