@@ -1,7 +1,8 @@
+
 <section *ngIf="tradingBooks.length == 0;else contentHasBooks" 
     fxLayout="column"   
     fxLayoutAlign="center center"
-    class="content-no-books">
+    class="heigth-70">
     <h1>
         Pelo visto é novo por aqui!
     </h1>
@@ -11,7 +12,7 @@
     </button>
 </section>
 <ng-template #contentHasBooks>
-    <section *ngFor="let tradingBook of tradingBooks">
+    <div *ngFor="let tradingBook of tradingBooks" class="full-width heigth-70">
         <amp-trading-book [tradingBook]="tradingBook"></amp-trading-book>
-    </section>
+    </div>
 </ng-template>
