@@ -9,6 +9,7 @@ import { TradingBookComponent } from './trading-books/trading-book/trading-book.
 import { HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
 import { NumericCellEditorComponent } from './trading-books/numeric-cell-editor/numeric-cell-editor.component';
+import { MoneyCellRendererComponent } from './trading-books/trading-book/money-cell-renderer/money-cell-renderer.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +18,14 @@ import { NumericCellEditorComponent } from './trading-books/numeric-cell-editor/
     HeaderComponent,
     TradingBookSettingsComponent,
     TradingBookComponent,
-    NumericCellEditorComponent
+    NumericCellEditorComponent,
+    MoneyCellRendererComponent,
   ],
   imports: [
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
-    AgGridModule.withComponents([NumericCellEditorComponent])
+    AgGridModule.withComponents([NumericCellEditorComponent, MoneyCellRendererComponent])
   ],
   entryComponents:[
     TradingBookSettingsComponent

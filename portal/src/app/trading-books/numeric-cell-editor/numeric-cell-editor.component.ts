@@ -10,7 +10,7 @@ import { ICellEditorParams } from 'ag-grid-community';
 export class NumericCellEditorComponent implements AfterViewInit, ICellEditorAngularComp {
   
   public value: number;
-  @ViewChild('input', {read: ViewContainerRef, static: false}) input: any
+  @ViewChild('inputNumber', {read: ViewContainerRef, static: false}) input: any
   
   constructor() { }
 

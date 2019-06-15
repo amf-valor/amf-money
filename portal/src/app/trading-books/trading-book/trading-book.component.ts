@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TradingBook } from './trading-book.model';
 import { GridApi } from 'ag-grid-community';
 import { NumericCellEditorComponent } from '../numeric-cell-editor/numeric-cell-editor.component';
+import { MoneyCellRendererComponent } from './money-cell-renderer/money-cell-renderer.component';
 
 @Component({
   selector: 'amp-trading-book',
@@ -14,14 +15,34 @@ export class TradingBookComponent implements OnInit {
 
   gridApi: GridApi
   defaultColDef = {resizable: true}
+  frameworkComponents = {
+    moneyCellRendererComponent: MoneyCellRendererComponent,
+  };
+
   columnDefs = [
     {
       headerName: 'Negociação',
       children:[
-        {headerName: 'Tipo Operação', field: 'operationType', editable: true},
+        {
+          headerName: 'Tipo Operação', 
+          field: 'operationType', 
+          editable: true,
+          cellEditor: 'agSelectCellEditor',
+          cellEditorParams: {values: ['Compra', 'Venda']}
+        },
         {headerName: 'Ativo', field: 'asset', editable: true},
-        {headerName: 'Quantidade', field: 'quantity', editable: true, cellEditorFramework: NumericCellEditorComponent},
-        {headerName: 'Preço', field: 'price', editable: true},
+        {
+          headerName: 'Quantidade', 
+          field: 'quantity', 
+          editable: true, 
+          cellEditorFramework: NumericCellEditorComponent
+        },
+        {
+          headerName: 'Preço', 
+          field: 'price',
+          editable: true,
+          cellRenderer: 'moneyCellRendererComponent'
+        },
         {headerName: 'Total', field: 'total', editable: true},
         {headerName: 'Stop Loss', field: 'stopLoss', editable: true},
         {headerName: 'Stop Gain', field: 'stopGain', editable: true}
@@ -43,10 +64,12 @@ export class TradingBookComponent implements OnInit {
     { operationType: 'Venda', asset: 'VISC11', price: 800.20 }
   ];
 
-  
-  constructor() { }
+  constructor() { 
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   onGridReady(params) {
     this.gridApi = params.api
