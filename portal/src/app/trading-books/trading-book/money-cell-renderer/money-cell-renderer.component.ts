@@ -17,3 +17,5 @@ export class MoneyCellRendererComponent implements OnInit {
     this.params = params;
   }
 }
+
+export const MONEY_CELL_RENDERER = 'moneyCellRendererComponent'

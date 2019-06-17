@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TradingBook } from './trading-book.model';
 import { GridApi } from 'ag-grid-community';
 import { NumericCellEditorComponent } from '../numeric-cell-editor/numeric-cell-editor.component';
-import { MoneyCellRendererComponent } from './money-cell-renderer/money-cell-renderer.component';
+import { MoneyCellRendererComponent, MONEY_CELL_RENDERER } from './money-cell-renderer/money-cell-renderer.component';
+import { PercentCellRendererComponent, PERCENT_CELL_RENDER } from './percent-cell-renderer/percent-cell-renderer.component';
 
 @Component({
   selector: 'amp-trading-book',
@@ -17,6 +18,7 @@ export class TradingBookComponent implements OnInit {
   defaultColDef = {resizable: true}
   frameworkComponents = {
     moneyCellRendererComponent: MoneyCellRendererComponent,
+    percentCellRendererComponent: PercentCellRendererComponent
   };
 
   columnDefs = [
@@ -41,25 +43,47 @@ export class TradingBookComponent implements OnInit {
           headerName: 'Preço', 
           field: 'price',
           editable: true,
-          cellRenderer: 'moneyCellRendererComponent'
+          cellRenderer: MONEY_CELL_RENDERER
         },
-        {headerName: 'Total', field: 'total', editable: true},
-        {headerName: 'Stop Loss', field: 'stopLoss', editable: true},
-        {headerName: 'Stop Gain', field: 'stopGain', editable: true}
+        {
+          headerName: 'Total', 
+          field: 'total',
+          cellRenderer: MONEY_CELL_RENDERER
+        },
+        {
+          headerName: 'Stop Loss', 
+          field: 'stopLoss', 
+          editable: true,
+          cellRenderer: MONEY_CELL_RENDERER
+        },
+        {
+          headerName: 'Stop Gain', 
+          field: 'stopGain', 
+          editable: true,
+          cellRenderer: MONEY_CELL_RENDERER
+        }
       ]
     },
     {
       headerName: 'Gerenciamento de risco',
       children:[
         {headerName: 'Risco ganho', field: 'riskRewardRatio'},
-        {headerName: 'Capital Alocado', field: 'allocatedCaptal'},
-        {headerName: 'Risco', field: 'risk'}
+        {
+          headerName: 'Capital Alocado', 
+          field: 'allocatedCaptal',
+          cellRenderer: PERCENT_CELL_RENDER
+        },
+        {
+          headerName: 'Risco', 
+          field: 'risk',
+          cellRenderer: PERCENT_CELL_RENDER
+        }
       ]
     }
   ];
 
   rowData = [
-    { operationType: 'Compra', asset: 'BCFF11', quantity: 10, price: 10, total: 100, stopLoss: 15.00, stopGain: 40, riskRewardRatio: 4, allocatedCaptal: 15, risk: 0.34},
+    { operationType: 'Compra', asset: 'BCFF11', quantity: 10, price: 10, total: 100, stopLoss: 15.00, stopGain: 40, riskRewardRatio: 4, allocatedCaptal: 0.15, risk: 0.34},
     { operationType: 'Compra', asset: 'BPFF11', price: 50.90 },
     { operationType: 'Venda', asset: 'VISC11', price: 800.20 }
   ];
