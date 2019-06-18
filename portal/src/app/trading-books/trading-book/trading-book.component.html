@@ -9,3 +9,6 @@
     [context]="gridContext"
     (gridReady)="onGridReady($event)">
 </ag-grid-angular>
+<div class="total-captal">
+    <span>Capital Total: {{tradingBook.totalCaptal | currency:'BRL'}}</span>
+</div>

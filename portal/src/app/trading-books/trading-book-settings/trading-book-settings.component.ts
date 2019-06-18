@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortalApiService } from 'src/app/services/portal-api.service';
-import { TradingBookSettings } from './trading-book-settings.model';
 import { UtilsService } from 'src/app/services/utils.service';
+import { TradingBook } from '../trading-book/trading-book.model';
 
 @Component({
   selector: 'amp-book-settings',
@@ -69,10 +69,11 @@ export class TradingBookSettingsComponent implements OnInit {
   }
 
   onOkBtnClick(): void{
-    const settings: TradingBookSettings = {
+    const settings: TradingBook = {
       name: this.bookSettingsForm.get(this.bookName).value,
       amountPerCaptal: this.bookSettingsForm.get(this.amountPerCaptal).value,
-      riskRewardRatio: this.bookSettingsForm.get(this.riskRewardRatio).value
+      riskRewardRatio: this.bookSettingsForm.get(this.riskRewardRatio).value,
+      totalCaptal: 100000
     }
     
     this.portalApiService.createTradingBook(settings).subscribe(tradingBook => {

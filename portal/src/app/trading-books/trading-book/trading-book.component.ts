@@ -108,15 +108,15 @@ export class TradingBookComponent implements OnInit {
     }
   };
 
-  gridContext = {
-    totalCaptal: 100000
-  }
+  gridContext
 
   constructor() { 
   }
 
   ngOnInit() {
-    
+    this.gridContext = {
+      totalCaptal: this.tradingBook.totalCaptal
+    }
   }
 
   onGridReady(params) {
