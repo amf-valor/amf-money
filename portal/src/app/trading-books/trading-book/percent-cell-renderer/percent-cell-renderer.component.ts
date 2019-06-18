@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'amp-percent-cell-renderer',
-  template: `<span>{{params.value | percent}}</span>`
+  template: `<span>{{params.value | percent:'1.0-2'}}</span>`
 })
 export class PercentCellRendererComponent implements OnInit {
 

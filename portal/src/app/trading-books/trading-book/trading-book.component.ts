@@ -84,9 +84,12 @@ export class TradingBookComponent implements OnInit {
           valueGetter: "(getValue('total') + ctx.totalCaptal) / ctx.totalCaptal -1"
         },
         {
-          headerName: 'Risco', 
+          headerName: 'Risco Carteira', 
           field: 'risk',
-          cellRenderer: PERCENT_CELL_RENDERER
+          cellRenderer: PERCENT_CELL_RENDERER,
+          valueGetter: "data.operationType == 'Compra' ? " +
+            "((data.price - data.stopLoss) * data.quantity + ctx.totalCaptal) / ctx.totalCaptal -1 "+
+            ": (ctx.totalCaptal / (ctx.totalCaptal - ((data.stopLoss - data.price) * data.quantity))) -1"
         }
       ]
     }
