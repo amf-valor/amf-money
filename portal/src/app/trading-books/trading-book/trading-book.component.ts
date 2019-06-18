@@ -73,7 +73,9 @@ export class TradingBookComponent implements OnInit {
           field: 'riskRewardRatio',
           valueGetter: "data.operationType == 'Compra' ? ((data.stopGain - data.price) * data.quantity)"+
             " / ((data.price - data.stopLoss) * data.quantity) : " +
-            "(data.price - data.stopGain) / (data.stopLoss - data.price)"
+            "(data.price - data.stopGain) / (data.stopLoss - data.price)",
+          valueFormatter: "isNaN(value) ? 0 : value"
+          
         },
         {
           headerName: 'Capital Alocado', 
