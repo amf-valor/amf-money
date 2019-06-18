@@ -68,7 +68,13 @@ export class TradingBookComponent implements OnInit {
     {
       headerName: 'Gerenciamento de risco',
       children:[
-        {headerName: 'Risco ganho', field: 'riskRewardRatio'},
+        {
+          headerName: 'Risco ganho', 
+          field: 'riskRewardRatio',
+          valueGetter: "data.operationType == 'Compra' ? ((data.stopGain - data.price) * data.quantity)"+
+            " / ((data.price - data.stopLoss) * data.quantity) : " +
+            "(data.price - data.stopGain) / (data.stopLoss - data.price)"
+        },
         {
           headerName: 'Capital Alocado', 
           field: 'allocatedCaptal',

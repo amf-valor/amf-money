@@ -24,7 +24,6 @@ describe('ApiPortalService', () => {
   });
 
   it('should create new trading book', () => {
-    const service: PortalApiService = TestBed.get(PortalApiService);
     const settings: TradingBookSettings = { name: "bookTest", amountPerCaptal: 15, riskRewardRatio: 3}
     
     service.createTradingBook(settings).subscribe(tradingBook =>{
