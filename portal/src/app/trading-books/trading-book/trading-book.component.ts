@@ -3,7 +3,7 @@ import { TradingBook } from './trading-book.model';
 import { GridApi } from 'ag-grid-community';
 import { NumericCellEditorComponent } from '../numeric-cell-editor/numeric-cell-editor.component';
 import { MoneyCellRendererComponent, MONEY_CELL_RENDERER } from './money-cell-renderer/money-cell-renderer.component';
-import { PercentCellRendererComponent, PERCENT_CELL_RENDER } from './percent-cell-renderer/percent-cell-renderer.component';
+import { PercentCellRendererComponent, PERCENT_CELL_RENDERER } from './percent-cell-renderer/percent-cell-renderer.component';
 
 @Component({
   selector: 'amp-trading-book',
@@ -36,19 +36,20 @@ export class TradingBookComponent implements OnInit {
         {
           headerName: 'Quantidade', 
           field: 'quantity', 
-          editable: true, 
+          type: "valueColumn", 
           cellEditorFramework: NumericCellEditorComponent
         },
         {
           headerName: 'Preço', 
           field: 'price',
-          editable: true,
+          type: "valueColumn",
           cellRenderer: MONEY_CELL_RENDERER
         },
         {
           headerName: 'Total', 
           field: 'total',
-          cellRenderer: MONEY_CELL_RENDERER
+          cellRenderer: MONEY_CELL_RENDERER,
+          valueGetter: "getValue('price') * getValue('quantity')"
         },
         {
           headerName: 'Stop Loss', 
@@ -71,12 +72,12 @@ export class TradingBookComponent implements OnInit {
         {
           headerName: 'Capital Alocado', 
           field: 'allocatedCaptal',
-          cellRenderer: PERCENT_CELL_RENDER
+          cellRenderer: PERCENT_CELL_RENDERER
         },
         {
           headerName: 'Risco', 
           field: 'risk',
-          cellRenderer: PERCENT_CELL_RENDER
+          cellRenderer: PERCENT_CELL_RENDERER
         }
       ]
     }
@@ -87,6 +88,13 @@ export class TradingBookComponent implements OnInit {
     { operationType: 'Compra', asset: 'BPFF11', price: 50.90 },
     { operationType: 'Venda', asset: 'VISC11', price: 800.20 }
   ];
+
+  columnTypes = {
+    valueColumn: {
+      editable: true,
+      valueParser: "Number(newValue)",
+    }
+  };
 
   constructor() { 
   }

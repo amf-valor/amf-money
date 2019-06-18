@@ -18,4 +18,4 @@ export class PercentCellRendererComponent implements OnInit {
   }
 }
 
-export const PERCENT_CELL_RENDER = 'percentCellRendererComponent'
+export const PERCENT_CELL_RENDERER = 'percentCellRendererComponent'
