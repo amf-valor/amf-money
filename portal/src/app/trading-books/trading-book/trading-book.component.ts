@@ -13,7 +13,7 @@ import { PercentCellRendererComponent, PERCENT_CELL_RENDERER } from './percent-c
 export class TradingBookComponent implements OnInit {
 
   @Input() tradingBook: TradingBook
-
+  
   gridApi: GridApi
   defaultColDef = {resizable: true}
   frameworkComponents = {
@@ -72,7 +72,8 @@ export class TradingBookComponent implements OnInit {
         {
           headerName: 'Capital Alocado', 
           field: 'allocatedCaptal',
-          cellRenderer: PERCENT_CELL_RENDERER
+          cellRenderer: PERCENT_CELL_RENDERER,
+          valueGetter: "(getValue('total') + ctx.totalCaptal) / ctx.totalCaptal -1"
         },
         {
           headerName: 'Risco', 
@@ -95,6 +96,10 @@ export class TradingBookComponent implements OnInit {
       valueParser: "Number(newValue)",
     }
   };
+
+  gridContext = {
+    totalCaptal: 100000
+  }
 
   constructor() { 
   }
