@@ -22,20 +22,24 @@ namespace PortalApi.UnitTests.Services
         [Fact]
         public void ShouldCreateNew()
         {
-            TradingBook toBeCreated = new TradingBook()
+            TradingBook expected = new TradingBook()
             {
                 AmountPerCaptal = 20,
                 Name = "Test",
-                RiskRewardRatio = 3
+                RiskRewardRatio = 3,
+                RiskPerTrade = 1,
+                TotalCaptal = 100000
             };
 
-            TradingBook actual = tradingBookService.Create(toBeCreated);
+            TradingBook actual = tradingBookService.Create(expected);
 
             Assert.True(actual.Id > 0);
             Assert.Equal(0.20, actual.AmountPerCaptal);
-            Assert.Equal(toBeCreated.Name, actual.Name);
-            Assert.Equal(toBeCreated.RiskRewardRatio, actual.RiskRewardRatio);
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.RiskRewardRatio, actual.RiskRewardRatio);
             Assert.NotEqual(default, actual.CreatedAt);
+            Assert.Equal(0.01, actual.RiskPerTrade);
+            Assert.Equal(expected.TotalCaptal, actual.TotalCaptal);
         }
     }
 }

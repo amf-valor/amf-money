@@ -26,6 +26,14 @@ namespace AmfValor.AmfMoney.PortalApi.Data
                 .HasColumnType("tinyint(1)")
                 .IsRequired();
 
+            builder.Property(t => t.TotalCaptal)
+                .HasColumnType("decimal(18,2)")
+                .IsRequired();
+
+            builder.Property(t => t.RiskPerTrade)
+                .HasColumnType("decimal(2,2)")
+                .IsRequired();
+
         }
     }
 }

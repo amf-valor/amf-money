@@ -26,7 +26,9 @@ namespace AmfValor.AmfMoney.PortalApi.Services
                         Name = toBeCreated.Name,
                         AmountPerCaptal = toBeCreated.AmountPerCaptal / 100,
                         RiskRewardRatio = toBeCreated.RiskRewardRatio,
-                        CreatedAt = DateTime.UtcNow
+                        CreatedAt = DateTime.UtcNow,
+                        RiskPerTrade = toBeCreated.RiskPerTrade / 100,
+                        TotalCaptal = toBeCreated.TotalCaptal
                     }
                 );
 

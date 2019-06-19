@@ -35,7 +35,9 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
                 AmountPerCaptal = 0.15,
                 Name = "Book Mock",
                 RiskRewardRatio = 4,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                TotalCaptal = 100000,
+                RiskPerTrade = 0.01
             }       
         });
     }

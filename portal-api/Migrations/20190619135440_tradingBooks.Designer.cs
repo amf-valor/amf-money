@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmfValor.AmfMoney.PortalApi.Migrations
 {
     [DbContext(typeof(AmfMoneyContext))]
-    [Migration("20190612132539_addTradingBooks")]
-    partial class addTradingBooks
+    [Migration("20190619135440_tradingBooks")]
+    partial class tradingBooks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,8 +37,16 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<decimal>("RiskPerTrade")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
+                        .HasColumnType("decimal(2,2)");
+
                     b.Property<sbyte>("RiskRewardRatio")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<decimal>("TotalCaptal")
+                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

@@ -15,5 +15,11 @@ namespace AmfValor.AmfMoney.PortalApi.Model
         [Range(1, 9999)]
         public int RiskRewardRatio { get; set; }
         public DateTime CreatedAt { get; set; }
+        [Required]
+        [Range(1, 99999999999999999)]
+        public double TotalCaptal { get; set; }
+        [Required]
+        [Range(1, 100)]
+        public double RiskPerTrade { get; set; }
     }
 }
