@@ -123,4 +123,21 @@ export class TradingBookComponent implements OnInit {
     this.gridApi = params.api
     this.gridApi.sizeColumnsToFit()
   }
+
+  onAddNewRowClick(){   
+    this.gridApi.updateRowData({ 
+      add: [{
+        operationType:'',
+        asset: '',
+        quantity: 0,
+        price: 0,
+        total: 0,
+        stopLoss: 0,
+        stopGain: 0,
+        riskRewardRatio: 0,
+        allocatedCaptal: 0,
+        risk: 0
+      }]
+    });
+  }
 }
