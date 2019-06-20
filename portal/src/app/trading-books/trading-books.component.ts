@@ -3,7 +3,6 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { TradingBookSettingsComponent } from './trading-book-settings/trading-book-settings.component';
 import { TradingBook } from './trading-book/trading-book.model';
 import { PortalApiService } from '../services/portal-api.service';
-import { MatSnackBar } from '@angular/material';
 import { UtilsService } from '../services/utils.service';
 
 @Component({

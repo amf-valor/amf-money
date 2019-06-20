@@ -15,6 +15,8 @@ export class TradingBookSettingsComponent implements OnInit {
   static readonly BOOK_NAME: string = 'bookName'
   static readonly AMOUNT_PER_CAPTAL: string = 'amountPerCaptal'
   static readonly RISK_REWARD_RATIO: string = 'riskRewardRatio'
+  static readonly RISK_PER_TRADE: string = 'riskPerTrade'
+  static readonly TOTAL_CAPTAL: string = 'totalCaptal'
 
   bookSettingsForm: FormGroup
   controlErrorMessages: Map<string, Map<string, string>>
@@ -32,18 +34,33 @@ export class TradingBookSettingsComponent implements OnInit {
   
   private initControlErrorMessages() {
     this.controlErrorMessages = new Map<string, Map<string, string>>();
+    
     this.controlErrorMessages.set(this.bookName, new Map<string, string>([
       ['required','O nome do book de ofertas é obrigatório!']
     ]))
+
     this.controlErrorMessages.set(this.amountPerCaptal, new Map<string, string>([
       ['required', 'A porcentagem de concentração de captal por boleta é obrigatoria!'],
-      ['min', `A porcentagem minima a ser definida é de ${this.amountPerCaptalMin}%`],
-      ['max', `A porcentagem máxima a ser definida é de ${this.amountPerCaptalMax}%`]
+      ['min', `A concentração de captal minima é de ${this.amountPerCaptalMin}%`],
+      ['max', `A concentração de captal maxima é de ${this.amountPerCaptalMax}%`]
     ]))
+
     this.controlErrorMessages.set(this.riskRewardRatio, new Map<string, string>([
       ['required', 'Informar a relação risco ganho é obrigatoria!'],
       ['min', `A relação risco ganho minima que pode ser definida é ${this.riskRewardRatioMin}`],
       ['max', `A relação risco ganho maxima que pode ser definida é ${this.riskRewardRatioMax}`]
+    ]))
+
+    this.controlErrorMessages.set(this.riskPerTrade, new Map<string, string>([
+      ['required', 'Informar a porcentagem de risco por negociação é obrigatório!'],
+      ['min', `Risco por negociação minimo é de ${this.riskPerTradeMin}%`],
+      ['max', `Risco por negociação maximo é de ${this.riskPerTradeMax}%`]
+    ]))
+
+    this.controlErrorMessages.set(this.totalCaptal, new Map<string, string>([
+      ['required', 'Informar o captal total é obrigatório'],
+      ['min', `Capital total minimo é ${this.totalCaptalMin}`],
+      ['max', `Capital total máximo é ${this.totalCaptalMax}`]
     ]))
   }
 
@@ -59,6 +76,16 @@ export class TradingBookSettingsComponent implements OnInit {
         Validators.required, 
         Validators.min(this.riskRewardRatioMin), 
         Validators.max(this.riskRewardRatioMax)
+      ]),
+      riskPerTrade: this.formBuilder.control('', [
+        Validators.required, 
+        Validators.min(this.riskPerTradeMin), 
+        Validators.max(this.riskPerTradeMax)
+      ]),
+      totalCaptal: this.formBuilder.control('', [
+        Validators.required, 
+        Validators.min(this.totalCaptalMin), 
+        Validators.max(this.totalCaptalMax)
       ])
     })
   }
@@ -73,7 +100,8 @@ export class TradingBookSettingsComponent implements OnInit {
       name: this.bookSettingsForm.get(this.bookName).value,
       amountPerCaptal: this.bookSettingsForm.get(this.amountPerCaptal).value,
       riskRewardRatio: this.bookSettingsForm.get(this.riskRewardRatio).value,
-      totalCaptal: 100000
+      totalCaptal: this.bookSettingsForm.get(this.totalCaptal).value,
+      riskPerTrade: this.bookSettingsForm.get(this.riskPerTrade).value
     }
     
     this.portalApiService.createTradingBook(settings).subscribe(tradingBook => {
@@ -96,6 +124,10 @@ export class TradingBookSettingsComponent implements OnInit {
     return TradingBookSettingsComponent.RISK_REWARD_RATIO
   }
 
+  get riskPerTrade(): string{
+    return TradingBookSettingsComponent.RISK_PER_TRADE
+  }
+
   get amountPerCaptalMin(): number{
     return 1
   }
@@ -111,4 +143,25 @@ export class TradingBookSettingsComponent implements OnInit {
   get riskRewardRatioMax(): number{
     return 9999
   }
+
+  get riskPerTradeMin(): number{
+    return 0.01
+  }
+
+  get riskPerTradeMax(): number{
+    return 100
+  }
+
+  get totalCaptal() : string {
+    return TradingBookSettingsComponent.TOTAL_CAPTAL
+  }
+
+  get totalCaptalMin(): number{
+    return 1
+  }
+
+  get totalCaptalMax(): number{
+    return 99999999999999999
+  }
+
 }

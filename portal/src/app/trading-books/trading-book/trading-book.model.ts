@@ -4,4 +4,5 @@ export interface TradingBook{
     amountPerCaptal : number
     riskRewardRatio : number
     totalCaptal: number
+    riskPerTrade: number
 }

@@ -28,6 +28,26 @@
       placeholder="Relação risco ganho"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
+    <amp-input 
+      class="full-width"
+      [errorMessages]="controlErrorMessages.get(riskPerTrade)"
+      type="number" 
+      [min]=riskPerTradeMin
+      [max]=riskPerTradeMax
+      [controlName]=riskPerTrade 
+      placeholder="% Aceitavel de risco por negociação"
+      [parentFormGroup]="bookSettingsForm">
+    </amp-input>
+    <amp-input 
+      class="full-width"
+      [errorMessages]="controlErrorMessages.get(totalCaptal)"
+      type="number" 
+      [min]=totalCaptalMin
+      [max]=totalCaptalMax
+      [controlName]=totalCaptal 
+      placeholder="Capital total"
+      [parentFormGroup]="bookSettingsForm">
+    </amp-input>
     <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
       <button mat-button (click)="onNoBtnClick()">Agora Não!</button>
       <button mat-raised-button 

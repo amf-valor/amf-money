@@ -29,16 +29,16 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
         [HttpGet]
         public IActionResult Get() => Ok(new List<TradingBook>()
         {
-            new TradingBook()
-            {
-                Id = 1,
-                AmountPerCaptal = 0.15,
-                Name = "Book Mock",
-                RiskRewardRatio = 4,
-                CreatedAt = DateTime.UtcNow,
-                TotalCaptal = 100000,
-                RiskPerTrade = 0.01
-            }       
+            //new TradingBook()
+            //{
+            //    Id = 1,
+            //    AmountPerCaptal = 0.15,
+            //    Name = "Book Mock",
+            //    RiskRewardRatio = 4,
+            //    CreatedAt = DateTime.UtcNow,
+            //    TotalCaptal = 100000,
+            //    RiskPerTrade = 0.01
+            //} 
         });
     }
 }
