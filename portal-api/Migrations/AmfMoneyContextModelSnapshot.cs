@@ -17,6 +17,24 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.Trade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("OperationType")
+                        .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
+
+                    b.Property<int?>("TradingBookId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TradingBookId");
+
+                    b.ToTable("Trade");
+                });
+
             modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.TradingBook", b =>
                 {
                     b.Property<int>("Id")
@@ -49,6 +67,13 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TradingBooks");
+                });
+
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.Trade", b =>
+                {
+                    b.HasOne("AmfValor.AmfMoney.PortalApi.Model.TradingBook")
+                        .WithMany("Trades")
+                        .HasForeignKey("TradingBookId");
                 });
 #pragma warning restore 612, 618
         }

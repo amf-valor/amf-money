@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AmfValor.AmfMoney.PortalApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class TradingBooksController : ControllerBase
     {
@@ -23,7 +23,18 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
                 return BadRequest(ModelState);
 
             TradingBook created = service.Create(tradingBook);
-            return Ok(created);
+            return Ok(new { id = created.Id });
+        }
+
+        [HttpPost]
+        [Route("{id}/Trade")]
+        public IActionResult AddNewTrade(int id, [FromBody] Trade trade)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Trade created = service.AddTo(id, trade);
+            return Ok(new { id = created.Id });
         }
 
         [HttpGet]

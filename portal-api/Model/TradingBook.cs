@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmfValor.AmfMoney.PortalApi.Model
@@ -21,5 +22,11 @@ namespace AmfValor.AmfMoney.PortalApi.Model
         [Required]
         [Range(0.01, 100)]
         public double RiskPerTrade { get; set; }
+        public ICollection<Trade> Trades { get; set; }
+
+        public TradingBook()
+        {
+            Trades = new List<Trade>();
+        }
     }
 }
