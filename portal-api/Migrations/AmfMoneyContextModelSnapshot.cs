@@ -22,9 +22,24 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Asset")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
                     b.Property<string>("OperationType")
                         .IsRequired()
                         .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<decimal>("StopGain")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("StopLoss")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<int?>("TradingBookId");
 
@@ -32,7 +47,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
 
                     b.HasIndex("TradingBookId");
 
-                    b.ToTable("Trade");
+                    b.ToTable("Trades");
                 });
 
             modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.TradingBook", b =>

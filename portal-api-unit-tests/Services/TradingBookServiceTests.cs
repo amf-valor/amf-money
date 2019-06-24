@@ -42,8 +42,14 @@ namespace PortalApi.UnitTests.Services
         {
             Trade expected = new Trade()
             {
-                OperationType = 'S'
+                OperationType = 'S',
+                Asset = "BOVA11",
+                Price = 50.80M,
+                Quantity = 10,
+                StopGain = 60.50M,
+                StopLoss = 40.50M
             };
+
             using (var tradingBookService = new TradingBookService(new AmfMoneyContext(_options)))
             {
                 TradingBook tradingBook = tradingBookService.Create(GenerateTradingBook());
@@ -53,6 +59,10 @@ namespace PortalApi.UnitTests.Services
 
                 Assert.True(actual.Id > 0);
                 Assert.Equal(expected.OperationType, actual.OperationType);
+                Assert.Equal(expected.Price, actual.Price);
+                Assert.Equal(expected.Quantity, actual.Quantity);
+                Assert.Equal(expected.StopGain, actual.StopGain);
+                Assert.Equal(expected.StopLoss, actual.StopLoss);
             }
         }
 

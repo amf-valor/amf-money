@@ -27,19 +27,24 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trade",
+                name: "Trades",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     OperationType = table.Column<string>(nullable: false),
-                    TradingBookId = table.Column<int>(nullable: true)
+                    Asset = table.Column<string>(maxLength: 50, nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    StopLoss = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    StopGain = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    TradingBookId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Trade", x => x.Id);
+                    table.PrimaryKey("PK_Trades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Trade_TradingBooks_TradingBookId",
+                        name: "FK_Trades_TradingBooks_TradingBookId",
                         column: x => x.TradingBookId,
                         principalTable: "TradingBooks",
                         principalColumn: "Id",
@@ -47,15 +52,15 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trade_TradingBookId",
-                table: "Trade",
+                name: "IX_Trades_TradingBookId",
+                table: "Trades",
                 column: "TradingBookId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Trade");
+                name: "Trades");
 
             migrationBuilder.DropTable(
                 name: "TradingBooks");
