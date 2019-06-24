@@ -1,7 +1,10 @@
 using AmfValor.AmfMoney.PortalApi.Data;
 using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AmfValor.AmfMoney.PortalApi.Services
 {
@@ -12,17 +15,7 @@ namespace AmfValor.AmfMoney.PortalApi.Services
         {
             _context = context;
         }
-        public Trade AddTo(int tradingBookId, Trade newTrade)
-        {
-            TradingBook tradingBook = _context.Find<TradingBook>(tradingBookId);
 
-            if (tradingBook == null)
-                throw new TradingBookNotFoundException($"trading book with id {tradingBookId} was not found!");
-
-            tradingBook.Trades.Add(newTrade);
-            _context.SaveChanges();
-            return newTrade;
-        }
         public TradingBook Create(TradingBook toBeCreated)
         {
             TradingBook toBeAdded;
@@ -65,5 +58,41 @@ namespace AmfValor.AmfMoney.PortalApi.Services
             Dispose(true);
         }
         #endregion
+
+        public void Update(int tradingBookId, ICollection<Trade> trades)
+        {
+            TradingBook tradingBook = _context.TradingBooks
+                .Where(tb => tb.Id == tradingBookId)
+                .Include(tb => tb.Trades)
+                .FirstOrDefault();
+                
+            if (tradingBook == null)
+                throw new TradingBookNotFoundException($"trading book with id {tradingBookId} was not found!");
+
+            foreach (var trade in trades) 
+            {
+                var existingTrade = tradingBook.Trades
+                .Where(t => t.Id == trade.Id)
+                .SingleOrDefault();
+
+                if (existingTrade == null)
+                {
+                    tradingBook.Trades.Add(trade);
+                }
+                else
+                {
+                    _context.Entry(existingTrade).CurrentValues.SetValues(trade);
+                }
+            }
+
+            foreach (var trade in tradingBook.Trades)
+            {
+                if (!trades.Any(t => t.Id == trade.Id))
+                    _context.Trades.Remove(trade);
+            }
+
+            _context.SaveChanges();
+        }
+        
     }
 }

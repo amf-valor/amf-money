@@ -27,14 +27,14 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
         }
 
         [HttpPost]
-        [Route("{id}/Trade")]
-        public IActionResult AddNewTrade(int id, [FromBody] Trade trade)
+        [Route("{id}/Trades")]
+        public IActionResult UpdateTrades(int id, [FromBody] ICollection<Trade> trades)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Trade created = service.AddTo(id, trade);
-            return Ok(new { id = created.Id });
+            service.Update(id, trades);
+            return Ok();
         }
 
         [HttpGet]

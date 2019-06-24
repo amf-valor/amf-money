@@ -37,6 +37,6 @@ namespace AmfValor.AmfMoney.PortalApi.Model
         [Column(TypeName = "decimal(18, 2)")]
         public decimal StopGain { get; set; }
 
-        private const string Decimal18_2 = "9999999999999999"; 
+        private const string Decimal18_2 = "9999999999999999";
     }
 }
