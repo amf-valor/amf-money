@@ -1,3 +1,5 @@
+import { Trade } from './trade.model';
+
 export interface TradingBook{
     id ?: number
     name : string
@@ -5,4 +7,5 @@ export interface TradingBook{
     riskRewardRatio : number
     totalCaptal: number
     riskPerTrade: number
+    trades: Trade[]
 }

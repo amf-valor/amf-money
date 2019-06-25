@@ -26,7 +26,7 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
             return Ok(new { id = created.Id });
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("{id}/Trades")]
         public IActionResult UpdateTrades(int id, [FromBody] ICollection<Trade> trades)
         {

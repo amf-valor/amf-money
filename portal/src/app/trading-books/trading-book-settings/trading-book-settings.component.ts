@@ -101,13 +101,14 @@ export class TradingBookSettingsComponent implements OnInit {
       amountPerCaptal: this.bookSettingsForm.get(this.amountPerCaptal).value,
       riskRewardRatio: this.bookSettingsForm.get(this.riskRewardRatio).value,
       totalCaptal: this.bookSettingsForm.get(this.totalCaptal).value,
-      riskPerTrade: this.bookSettingsForm.get(this.riskPerTrade).value
+      riskPerTrade: this.bookSettingsForm.get(this.riskPerTrade).value,
+      trades: []
     }
     
     this.portalApiService.createTradingBook(settings).subscribe(tradingBook => {
       this.dialogRef.close(tradingBook);
     }, err => {
-      this.utilsService.showGenericError()
+      this.utilsService.showNetworkError()
       console.log(err)
     })
   }

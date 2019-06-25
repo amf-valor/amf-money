@@ -27,14 +27,13 @@ export class TradingBooksComponent implements OnInit {
         this.tradingBooks = tradingBooks
       }, err => {
         console.log(err)
-        this.utilsService.showGenericError()
+        this.utilsService.showNetworkError()
       })
   }
 
   onCreateBookBtnClick(): void{
       const dialogRef = this.dialog.open(TradingBookSettingsComponent)
       dialogRef.afterClosed().subscribe(newTradingBook => {
-        console.log(`tradingBook criado ${newTradingBook.settings.id}`)
         this.tradingBooks.push(newTradingBook)
       })
   }

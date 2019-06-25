@@ -4,6 +4,9 @@ import { GridApi } from 'ag-grid-community';
 import { NumericCellEditorComponent } from '../numeric-cell-editor/numeric-cell-editor.component';
 import { MoneyCellRendererComponent, MONEY_CELL_RENDERER } from './money-cell-renderer/money-cell-renderer.component';
 import { PercentCellRendererComponent, PERCENT_CELL_RENDERER } from './percent-cell-renderer/percent-cell-renderer.component';
+import { PortalApiService } from 'src/app/services/portal-api.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import { Trade } from './trade.model'
 
 @Component({
   selector: 'amp-trading-book',
@@ -13,7 +16,7 @@ import { PercentCellRendererComponent, PERCENT_CELL_RENDERER } from './percent-c
 export class TradingBookComponent implements OnInit {
 
   @Input() tradingBook: TradingBook
-  
+
   gridApi: GridApi
   defaultColDef = {resizable: true}
   frameworkComponents = {
@@ -95,11 +98,18 @@ export class TradingBookComponent implements OnInit {
     }
   ];
 
-  rowData = [
-    { operationType: 'Compra', asset: 'BCFF11', quantity: 10, price: 10, total: 100, stopLoss: 15.00, stopGain: 40, riskRewardRatio: 4, allocatedCaptal: 0.15, risk: 0.34},
-    { operationType: 'Compra', asset: 'BPFF11', price: 50.90 },
-    { operationType: 'Venda', asset: 'VISC11', price: 800.20 }
-  ];
+  rowData = [{
+    operationType: 'Compra', 
+    asset: 'BCFF11', 
+    quantity: 10, 
+    price: 10, 
+    total: 100, 
+    stopLoss: 15.00, 
+    stopGain: 40, 
+    riskRewardRatio: 4, 
+    allocatedCaptal: 0.15, 
+    risk: 0.34
+  }];
 
   columnTypes = {
     valueColumn: {
@@ -108,10 +118,9 @@ export class TradingBookComponent implements OnInit {
     }
   };
 
-  gridContext
+  gridContext: { totalCaptal: number; }
 
-  constructor() { 
-  }
+  constructor(private portalApiService: PortalApiService, private utilsService: UtilsService) { }
 
   ngOnInit() {
     this.gridContext = {
@@ -125,19 +134,41 @@ export class TradingBookComponent implements OnInit {
   }
 
   onAddNewRowClick(){   
-    this.gridApi.updateRowData({ 
-      add: [{
-        operationType:'',
-        asset: '',
-        quantity: 0,
-        price: 0,
-        total: 0,
-        stopLoss: 0,
-        stopGain: 0,
-        riskRewardRatio: 0,
-        allocatedCaptal: 0,
-        risk: 0
-      }]
+    const empty = {
+      id: 0,  
+      operationType:'',
+      asset: '',
+      quantity: 0,
+      price: 0,
+      total: 0,
+      stopLoss: 0,
+      stopGain: 0,
+      riskRewardRatio: 0,
+      allocatedCaptal: 0,
+      risk: 0
+    }
+    this.gridApi.updateRowData({ add: [empty] });
+  }
+
+  onSyncBtnClick(){
+    const trades: Trade[] = [];
+    this.gridApi.forEachNode(node => {
+      trades.push({
+        id: +node.id,
+        operationType: node.data.operationType == "Compra" ? 'B' : 'S',
+        asset: node.data.asset,
+        quantity: node.data.quantity,
+        price: node.data.price,
+        stopGain: node.data.stopGain,
+        stopLoss: node.data.stopLoss
+      })
     });
+    this.portalApiService.updateTrades(this.tradingBook.id, trades)
+      .subscribe(() => {
+        this.utilsService.showMessage('Book de ofertas sincronizado com exito!')
+      }, err => {
+        console.log(err)
+        this.utilsService.showNetworkError()
+      })
   }
 }
