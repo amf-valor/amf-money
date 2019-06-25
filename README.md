@@ -1,5 +1,5 @@
 # amf-money
-It's about a financial product being constantly released to help traders and investors in your dayli-basis.
+It's about a financial product being constantly released to help traders and investors in their daily-basis.
 
 <h1>RoadMap</h1>
 
