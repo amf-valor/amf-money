@@ -25,6 +25,7 @@ export class TradingBookComponent implements OnInit {
   };
 
   columnDefs = [
+    {headerName: 'id', field: 'id', hide: true},
     {
       headerName: 'Negociação',
       children:[
@@ -33,7 +34,11 @@ export class TradingBookComponent implements OnInit {
           field: 'operationType', 
           editable: true,
           cellEditor: 'agSelectCellEditor',
-          cellEditorParams: {values: ['Compra', 'Venda']}
+          cellEditorParams: {values: ['Compra', 'Venda']},
+          valueFormatter: function(params){
+            if(params.value == "S") return "Venda"
+            if(params.value == "B") return "Compra"
+          }
         },
         {headerName: 'Ativo', field: 'asset', editable: true},
         {
@@ -98,19 +103,6 @@ export class TradingBookComponent implements OnInit {
     }
   ];
 
-  rowData = [{
-    operationType: 'Compra', 
-    asset: 'BCFF11', 
-    quantity: 10, 
-    price: 10, 
-    total: 100, 
-    stopLoss: 15.00, 
-    stopGain: 40, 
-    riskRewardRatio: 4, 
-    allocatedCaptal: 0.15, 
-    risk: 0.34
-  }];
-
   columnTypes = {
     valueColumn: {
       editable: true,
@@ -154,7 +146,7 @@ export class TradingBookComponent implements OnInit {
     const trades: Trade[] = [];
     this.gridApi.forEachNode(node => {
       trades.push({
-        id: +node.id,
+        id: node.data.id,
         operationType: node.data.operationType == "Compra" ? 'B' : 'S',
         asset: node.data.asset,
         quantity: node.data.quantity,
@@ -163,6 +155,7 @@ export class TradingBookComponent implements OnInit {
         stopLoss: node.data.stopLoss
       })
     });
+
     this.portalApiService.updateTrades(this.tradingBook.id, trades)
       .subscribe(() => {
         this.utilsService.showMessage('Book de ofertas sincronizado com exito!')

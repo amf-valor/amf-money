@@ -10,10 +10,10 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
     [ApiController]
     public class TradingBooksController : ControllerBase
     {
-        private readonly ITradingBookService service;
+        private readonly ITradingBookService _service;
         public TradingBooksController(ITradingBookService service)
         {
-            this.service = service;
+            _service = service;
         }
 
         [HttpPost]
@@ -22,7 +22,7 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            TradingBook created = service.Create(tradingBook);
+            TradingBook created = _service.Create(tradingBook);
             return Ok(new { id = created.Id });
         }
 
@@ -33,23 +33,11 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            service.Update(id, trades);
+            _service.Update(id, trades);
             return Ok();
         }
 
         [HttpGet]
-        public IActionResult Get() => Ok(new List<TradingBook>()
-        {
-            new TradingBook()
-            {
-                Id = 1,
-                AmountPerCaptal = 0.15,
-                Name = "Book Mock",
-                RiskRewardRatio = 4,
-                CreatedAt = DateTime.UtcNow,
-                TotalCaptal = 100000,
-                RiskPerTrade = 0.01
-            }
-        });
+        public IActionResult Get() => Ok(_service.GetAll());
     }
 }

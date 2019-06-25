@@ -93,6 +93,12 @@ namespace AmfValor.AmfMoney.PortalApi.Services
 
             _context.SaveChanges();
         }
-        
+
+        public ICollection<TradingBook> GetAll()
+        {
+            return _context.TradingBooks
+                    .Include(t => t.Trades)
+                    .ToList();
+        }
     }
 }

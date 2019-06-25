@@ -7,5 +7,6 @@ namespace AmfValor.AmfMoney.PortalApi.Services.Contract
     {
         TradingBook Create(TradingBook toBeCreated);
         void Update(int tradingBookId, ICollection<Trade> trades);
+        ICollection<TradingBook> GetAll();
     }
 }
