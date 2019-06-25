@@ -11,6 +11,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { NumericCellEditorComponent } from './trading-books/numeric-cell-editor/numeric-cell-editor.component';
 import { MoneyCellRendererComponent } from './trading-books/trading-book/money-cell-renderer/money-cell-renderer.component';
 import { PercentCellRendererComponent } from './trading-books/trading-book/percent-cell-renderer/percent-cell-renderer.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { PercentCellRendererComponent } from './trading-books/trading-book/perce
     NumericCellEditorComponent,
     MoneyCellRendererComponent,
     PercentCellRendererComponent,
+    FooterComponent,
   ],
   imports: [
     AppRoutingModule,
