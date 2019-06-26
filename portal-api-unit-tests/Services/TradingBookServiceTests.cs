@@ -23,18 +23,14 @@ namespace PortalApi.UnitTests.Services
         {
             using (var tradingBookService = new TradingBookService(new AmfMoneyContext(_options)))
             {
-                TradingBook expected = GenerateTradingBook();
+                TradingBookSetting setting = Generate();
 
-                TradingBook actual = tradingBookService.Create(expected);
+                TradingBook actual = tradingBookService.Create(setting);
 
                 Assert.True(actual.Id > 0);
-                Assert.Equal(0.20, actual.AmountPerCaptal);
-                Assert.Equal(expected.Name, actual.Name);
-                Assert.Equal(expected.RiskRewardRatio, actual.RiskRewardRatio);
+                Assert.Equal(setting, actual.Setting);
                 Assert.NotEqual(default, actual.CreatedAt);
-                Assert.Equal(0.01, actual.RiskPerTrade);
-                Assert.Equal(expected.TotalCaptal, actual.TotalCaptal);
-                Assert.Equal(expected.Trades, actual.Trades);
+                Assert.True(actual.Trades.Count == 0);
             }
         }
 
@@ -56,7 +52,10 @@ namespace PortalApi.UnitTests.Services
 
             using (var context = new AmfMoneyContext(_options))
             {
-                context.TradingBooks.Add(GenerateTradingBook());
+                context.TradingBooks.Add(new TradingBook()
+                {
+                    Setting = Generate()
+                });
                 context.SaveChanges();
             }
 
@@ -72,7 +71,7 @@ namespace PortalApi.UnitTests.Services
                 .Include(tb => tb.Trades)
                 .FirstOrDefault();
 
-                var actual  = tradingBook.Trades.ToList()[1];
+                var actual  = tradingBook.Trades.ToList()[0];
                 var expected = trades[0];
                 Assert.True(actual.Id > 0);
                 Assert.Equal(expected.OperationType, actual.OperationType);
@@ -102,7 +101,10 @@ namespace PortalApi.UnitTests.Services
 
             using (var context = new AmfMoneyContext(_options))
             {
-                context.TradingBooks.Add(GenerateTradingBook());
+                context.TradingBooks.Add(new TradingBook()
+                {
+                    Setting = Generate()
+                });
                 context.SaveChanges();
             }
 
@@ -139,7 +141,10 @@ namespace PortalApi.UnitTests.Services
 
             using (var context = new AmfMoneyContext(_options))
             {
-                context.TradingBooks.Add(GenerateTradingBook());
+                context.TradingBooks.Add(new TradingBook()
+                {
+                    Setting = Generate()
+                });
                 context.SaveChanges();
             }
 
@@ -160,20 +165,36 @@ namespace PortalApi.UnitTests.Services
             }
         }
 
-        private TradingBook GenerateTradingBook()
+        [Fact]
+        public void ShouldUpdateSetting()
         {
-            return new TradingBook()
+            TradingBookSetting expected = new TradingBookSetting("expected", 0.10, 10, 9000, 0.06);
+
+            using (var context = new AmfMoneyContext(_options))
             {
-                AmountPerCaptal = 20,
-                Name = "Test",
-                RiskRewardRatio = 3,
-                RiskPerTrade = 1,
-                TotalCaptal = 100000,
-                Trades = new List<Trade>()
+                context.TradingBooks.Add(new TradingBook()
                 {
-                    new Trade() { OperationType = 'B'}
-                }
-            };
+                    Setting = Generate()
+                });
+                context.SaveChanges();
+            }
+
+            using (var service = new TradingBookService(new AmfMoneyContext(_options)))
+            {
+                service.Update(1, expected);
+            }
+
+            using (var context = new AmfMoneyContext(_options))
+            {
+                var actual = context.TradingBooks
+                .Where(tb => tb.Id == 1)
+                .Include(tb => tb.Trades)
+                .FirstOrDefault().Setting;
+
+                Assert.Equal(expected, actual);
+            }
         }
+
+        private TradingBookSetting Generate() => new TradingBookSetting("test", 20, 4, 100000, 1);
     }
 }

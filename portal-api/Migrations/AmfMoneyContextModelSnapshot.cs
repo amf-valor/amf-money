@@ -55,29 +55,10 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("AmountPerCaptal")
-                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
-                        .HasColumnType("decimal(2,2)");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<decimal>("RiskPerTrade")
-                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
-                        .HasColumnType("decimal(2,2)");
-
-                    b.Property<sbyte>("RiskRewardRatio")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<decimal>("TotalCaptal")
-                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -89,6 +70,47 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     b.HasOne("AmfValor.AmfMoney.PortalApi.Model.TradingBook")
                         .WithMany("Trades")
                         .HasForeignKey("TradingBookId");
+                });
+
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.TradingBook", b =>
+                {
+                    b.OwnsOne("AmfValor.AmfMoney.PortalApi.Model.Setting", "TheSetting", b1 =>
+                        {
+                            b1.Property<int>("TradingBookId");
+
+                            b1.Property<decimal>("AmountPerCaptal")
+                                .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
+                                .HasColumnName("AmountPerCaptal")
+                                .HasColumnType("decimal(2,2)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnName("Name")
+                                .HasColumnType("varchar(50)");
+
+                            b1.Property<decimal>("RiskPerTrade")
+                                .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
+                                .HasColumnName("RiskPerTrade")
+                                .HasColumnType("decimal(2,2)");
+
+                            b1.Property<sbyte>("RiskRewardRatio")
+                                .HasColumnName("RiskRewardRatio")
+                                .HasColumnType("tinyint(1)");
+
+                            b1.Property<decimal>("TotalCaptal")
+                                .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
+                                .HasColumnName("TotalCaptal")
+                                .HasColumnType("decimal(18,2)");
+
+                            b1.HasKey("TradingBookId");
+
+                            b1.ToTable("TradingBooks");
+
+                            b1.HasOne("AmfValor.AmfMoney.PortalApi.Model.TradingBook")
+                                .WithOne("TheSetting")
+                                .HasForeignKey("AmfValor.AmfMoney.PortalApi.Model.Setting", "TradingBookId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 #pragma warning restore 612, 618
         }

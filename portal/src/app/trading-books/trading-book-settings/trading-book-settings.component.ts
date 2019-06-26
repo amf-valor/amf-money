@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PortalApiService } from 'src/app/services/portal-api.service';
-import { UtilsService } from 'src/app/services/utils.service';
-import { TradingBook } from '../trading-book/trading-book.model';
+import { TradingBookSettings } from './trading-book-settings.model';
 
 @Component({
   selector: 'amp-book-settings',
@@ -24,8 +22,7 @@ export class TradingBookSettingsComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<TradingBookSettingsComponent>, 
     private formBuilder: FormBuilder,
-    private portalApiService: PortalApiService,
-    private utilsService: UtilsService) { }
+    @Inject(MAT_DIALOG_DATA) private settings: TradingBookSettings) { }
 
   ngOnInit() {
     this.initBookSettingsForm()
@@ -66,23 +63,23 @@ export class TradingBookSettingsComponent implements OnInit {
 
   private initBookSettingsForm(){
     this.bookSettingsForm = this.formBuilder.group({
-      bookName: this.formBuilder.control('', [Validators.required]),
-      amountPerCaptal: this.formBuilder.control('', [
+      bookName: this.formBuilder.control(this.settings.name, [Validators.required]),
+      amountPerCaptal: this.formBuilder.control(this.settings.amountPerCaptal * 100, [
         Validators.required, 
         Validators.min(this.amountPerCaptalMin), 
         Validators.max(this.riskRewardRatioMax)
       ]),
-      riskRewardRatio: this.formBuilder.control('', [
+      riskRewardRatio: this.formBuilder.control(this.settings.riskRewardRatio, [
         Validators.required, 
         Validators.min(this.riskRewardRatioMin), 
         Validators.max(this.riskRewardRatioMax)
       ]),
-      riskPerTrade: this.formBuilder.control('', [
+      riskPerTrade: this.formBuilder.control(this.settings.riskPerTrade * 100, [
         Validators.required, 
         Validators.min(this.riskPerTradeMin), 
         Validators.max(this.riskPerTradeMax)
       ]),
-      totalCaptal: this.formBuilder.control('', [
+      totalCaptal: this.formBuilder.control(this.settings.totalCaptal, [
         Validators.required, 
         Validators.min(this.totalCaptalMin), 
         Validators.max(this.totalCaptalMax)
@@ -96,21 +93,15 @@ export class TradingBookSettingsComponent implements OnInit {
   }
 
   onOkBtnClick(): void{
-    const settings: TradingBook = {
+    const settings: TradingBookSettings = {
+      title: this.settings.title,
       name: this.bookSettingsForm.get(this.bookName).value,
-      amountPerCaptal: this.bookSettingsForm.get(this.amountPerCaptal).value,
+      amountPerCaptal: this.bookSettingsForm.get(this.amountPerCaptal).value / 100,
       riskRewardRatio: this.bookSettingsForm.get(this.riskRewardRatio).value,
       totalCaptal: this.bookSettingsForm.get(this.totalCaptal).value,
-      riskPerTrade: this.bookSettingsForm.get(this.riskPerTrade).value,
-      trades: []
+      riskPerTrade: this.bookSettingsForm.get(this.riskPerTrade).value / 100,
     }
-    
-    this.portalApiService.createTradingBook(settings).subscribe(tradingBook => {
-      this.dialogRef.close(tradingBook);
-    }, err => {
-      this.utilsService.showNetworkError()
-      console.log(err)
-    })
+    this.dialogRef.close(settings)
   }
 
   get bookName(): string{

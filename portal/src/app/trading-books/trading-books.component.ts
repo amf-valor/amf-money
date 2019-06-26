@@ -26,17 +26,34 @@ export class TradingBooksComponent implements OnInit {
       .subscribe(tradingBooks => {
         this.tradingBooks = tradingBooks
       }, err => {
-        console.log(err)
         this.utilsService.showNetworkError()
       })
   }
 
   onCreateBookBtnClick(): void{
-      const dialogRef = this.dialog.open(TradingBookSettingsComponent)
-      dialogRef.afterClosed().subscribe(newTradingBook => {
-        this.tradingBooks.push(newTradingBook)
-      })
+    const dialogRef = this.dialog.open(TradingBookSettingsComponent, {
+      data: {
+        title: 'Novo Book de ofertas',
+        name: '',
+        amountPerCaptal : '',
+        riskRewardRatio : '',
+        totalCaptal: '',
+        riskPerTrade: ''
+      }
+    })
+    
+    dialogRef.afterClosed().subscribe(settings => {
+      if(settings !== undefined){
+        this.portalApiService.createTradingBook(settings)
+        .subscribe(newId => {
+          const tradingBook: TradingBook = {
+            id: newId,
+            setting: settings,
+            trades: []
+          } 
+          this.tradingBooks.push(tradingBook)
+        }, err => this.utilsService.showNetworkError())
+      }
+    })
   }
-
-
 }

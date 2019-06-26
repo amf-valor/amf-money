@@ -17,12 +17,12 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] TradingBook tradingBook)
+        public IActionResult Post([FromBody] TradingBookSetting theSetting)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            TradingBook created = _service.Create(tradingBook);
+            TradingBook created = _service.Create(theSetting);
             return Ok(new { id = created.Id });
         }
 
@@ -39,5 +39,16 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
 
         [HttpGet]
         public IActionResult Get() => Ok(_service.GetAll());
+
+        [HttpPut]
+        [Route("{id}/settings")]
+        public IActionResult UpdateSetting(int id, [FromBody] TradingBookSetting setting)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            _service.Update(id, setting);
+            return Ok();
+        }
     }
 }

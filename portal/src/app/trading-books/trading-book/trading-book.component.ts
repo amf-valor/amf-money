@@ -7,6 +7,8 @@ import { PercentCellRendererComponent, PERCENT_CELL_RENDERER } from './percent-c
 import { PortalApiService } from 'src/app/services/portal-api.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Trade } from './trade.model'
+import { MatDialog } from '@angular/material';
+import { TradingBookSettingsComponent } from '../trading-book-settings/trading-book-settings.component';
 
 @Component({
   selector: 'amp-trading-book',
@@ -112,11 +114,13 @@ export class TradingBookComponent implements OnInit {
 
   gridContext: { totalCaptal: number; }
 
-  constructor(private portalApiService: PortalApiService, private utilsService: UtilsService) { }
+  constructor(private portalApiService: PortalApiService, 
+    private utilsService: UtilsService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.gridContext = {
-      totalCaptal: this.tradingBook.totalCaptal
+      totalCaptal: this.tradingBook.setting.totalCaptal
     }
   }
 
@@ -163,5 +167,30 @@ export class TradingBookComponent implements OnInit {
         console.log(err)
         this.utilsService.showNetworkError()
       })
+  }
+
+  onSettingsBtnClick(){
+    const dialogRef = this.dialog.open(TradingBookSettingsComponent, {
+      data: {
+        title: this.tradingBook.setting.name,
+        name: this.tradingBook.setting.name,
+        amountPerCaptal : this.tradingBook.setting.amountPerCaptal,
+        riskRewardRatio : this.tradingBook.setting.riskRewardRatio,
+        totalCaptal: this.tradingBook.setting.totalCaptal,
+        riskPerTrade: this.tradingBook.setting.riskPerTrade
+      }
+    })
+
+    dialogRef.afterClosed().subscribe(newSettings => {
+      if(newSettings !== undefined){
+        this.portalApiService.updateSettings(this.tradingBook.id, newSettings)
+          .subscribe(() => {
+            this.tradingBook.setting = newSettings
+            this.utilsService.showMessage("configurações atualizadas com sucesso!")
+          }, err => {
+            this.utilsService.showNetworkError()
+          })    
+      }
+    })
   }
 }

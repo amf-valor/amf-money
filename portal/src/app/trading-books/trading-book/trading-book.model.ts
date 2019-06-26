@@ -1,11 +1,8 @@
 import { Trade } from './trade.model';
+import { TradingBookSettings } from '../trading-book-settings/trading-book-settings.model';
 
 export interface TradingBook{
     id ?: number
-    name : string
-    amountPerCaptal : number
-    riskRewardRatio : number
-    totalCaptal: number
-    riskPerTrade: number
+    setting: TradingBookSettings
     trades: Trade[]
 }

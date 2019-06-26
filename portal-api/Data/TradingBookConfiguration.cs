@@ -11,29 +11,37 @@ namespace AmfValor.AmfMoney.PortalApi.Data
             builder.HasKey(t => t.Id);
 
             builder.Property(t => t.CreatedAt)
-                .HasColumnType("timestamp")
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+               .HasColumnType("timestamp")
+               .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-            builder.Property(t => t.Name)
-                .HasColumnType("varchar(50)")
-                .IsRequired();
 
-            builder.Property(t => t.AmountPerCaptal)
-                .HasColumnType("decimal(2,2)")
-                .IsRequired();
+            builder.OwnsOne(tb => tb.Setting, setting =>
+            {
+                setting.Property(t => t.Name)
+                    .HasColumnType("varchar(50)")
+                    .HasColumnName("Name")
+                    .IsRequired();
 
-            builder.Property(t => t.RiskRewardRatio)
-                .HasColumnType("tinyint(1)")
-                .IsRequired();
+                setting.Property(t => t.AmountPerCaptal)
+                    .HasColumnType("decimal(2,2)")
+                    .HasColumnName("AmountPerCaptal")
+                    .IsRequired();
 
-            builder.Property(t => t.TotalCaptal)
-                .HasColumnType("decimal(18,2)")
-                .IsRequired();
+                setting.Property(t => t.RiskRewardRatio)
+                    .HasColumnType("tinyint(1)")
+                    .HasColumnName("RiskRewardRatio")
+                    .IsRequired();
 
-            builder.Property(t => t.RiskPerTrade)
-                .HasColumnType("decimal(2,2)")
-                .IsRequired();
+                setting.Property(t => t.TotalCaptal)
+                    .HasColumnType("decimal(18,2)")
+                    .HasColumnName("TotalCaptal")
+                    .IsRequired();
 
+                setting.Property(t => t.RiskPerTrade)
+                    .HasColumnType("decimal(2,2)")
+                    .HasColumnName("RiskPerTrade")
+                    .IsRequired();
+            });
         }
     }
 }

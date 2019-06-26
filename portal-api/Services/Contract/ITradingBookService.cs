@@ -5,8 +5,9 @@ namespace AmfValor.AmfMoney.PortalApi.Services.Contract
 {
     public interface ITradingBookService
     {
-        TradingBook Create(TradingBook toBeCreated);
+        TradingBook Create(TradingBookSetting theSetting);
         void Update(int tradingBookId, ICollection<Trade> trades);
         ICollection<TradingBook> GetAll();
+        void Update(int id, TradingBookSetting setting);
     }
 }

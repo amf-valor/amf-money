@@ -17,9 +17,9 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     AmountPerCaptal = table.Column<decimal>(type: "decimal(2,2)", nullable: false),
                     RiskRewardRatio = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     TotalCaptal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RiskPerTrade = table.Column<decimal>(type: "decimal(2,2)", nullable: false)
+                    RiskPerTrade = table.Column<decimal>(type: "decimal(2,2)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -38,7 +38,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     StopLoss = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     StopGain = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    TradingBookId = table.Column<int>(nullable: false)
+                    TradingBookId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -16,23 +16,15 @@ namespace AmfValor.AmfMoney.PortalApi.Services
             _context = context;
         }
 
-        public TradingBook Create(TradingBook toBeCreated)
+        public TradingBook Create(TradingBookSetting setting)
         {
             TradingBook toBeAdded;
 
-            _context.TradingBooks.Add
-            (
-                toBeAdded = new TradingBook()
-                {
-                    Name = toBeCreated.Name,
-                    AmountPerCaptal = toBeCreated.AmountPerCaptal / 100,
-                    RiskRewardRatio = toBeCreated.RiskRewardRatio,
-                    CreatedAt = DateTime.UtcNow,
-                    RiskPerTrade = toBeCreated.RiskPerTrade / 100,
-                    TotalCaptal = toBeCreated.TotalCaptal,
-                    Trades = toBeCreated.Trades
-                }
-            );
+            _context.TradingBooks.Add(toBeAdded = new TradingBook()
+            {
+                Setting = setting,
+                CreatedAt = DateTime.UtcNow
+            });  
 
             _context.SaveChanges();
             return toBeAdded;
@@ -100,5 +92,19 @@ namespace AmfValor.AmfMoney.PortalApi.Services
                     .Include(t => t.Trades)
                     .ToList();
         }
+
+        public void Update(int tradingBookId, TradingBookSetting setting)
+        {
+            TradingBook tradingBook = _context.TradingBooks
+                .Where(tb => tb.Id == tradingBookId)
+                .FirstOrDefault();
+
+            if (tradingBook == null)
+                throw new TradingBookNotFoundException($"trading book with id {tradingBookId} was not found!");
+
+            tradingBook.Setting = setting;
+            _context.SaveChanges();
+        }
+
     }
 }
