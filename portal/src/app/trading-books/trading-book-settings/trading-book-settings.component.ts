@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TradingBookSettings } from './trading-book-settings.model';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'amp-book-settings',
@@ -22,7 +23,8 @@ export class TradingBookSettingsComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<TradingBookSettingsComponent>, 
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private settings: TradingBookSettings) { }
+    @Inject(MAT_DIALOG_DATA) public settings: TradingBookSettings,
+    private messageService: MessageService) { }
 
   ngOnInit() {
     this.initBookSettingsForm()
@@ -33,31 +35,47 @@ export class TradingBookSettingsComponent implements OnInit {
     this.controlErrorMessages = new Map<string, Map<string, string>>();
     
     this.controlErrorMessages.set(this.bookName, new Map<string, string>([
-      ['required','O nome do book de ofertas é obrigatório!']
+      ['required', this.messageService.get('tradingBookSettings.portfolioName.required')]
     ]))
 
     this.controlErrorMessages.set(this.amountPerCaptal, new Map<string, string>([
-      ['required', 'A porcentagem de concentração de captal por boleta é obrigatoria!'],
-      ['min', `A concentração de captal minima é de ${this.amountPerCaptalMin}%`],
-      ['max', `A concentração de captal maxima é de ${this.amountPerCaptalMax}%`]
+      ['required', this.messageService.get('tradingBookSettings.capitalPerTrading.required')],
+      ['min', 
+        `${this.messageService.get('tradingBookSettings.capitalPerTrading.min')} 
+         ${this.amountPerCaptalMin}%`],
+      ['max', 
+      `${this.messageService.get('tradingBookSettings.capitalPerTrading.max')} 
+       ${this.amountPerCaptalMax}%`],
     ]))
 
     this.controlErrorMessages.set(this.riskRewardRatio, new Map<string, string>([
-      ['required', 'Informar a relação risco ganho é obrigatoria!'],
-      ['min', `A relação risco ganho minima que pode ser definida é ${this.riskRewardRatioMin}`],
-      ['max', `A relação risco ganho maxima que pode ser definida é ${this.riskRewardRatioMax}`]
+      ['required', this.messageService.get('tradingBookSettings.riskRewardRatio.required')],
+      ['min', 
+        `${this.messageService.get('tradingBookSettings.riskRewardRatio.min')} 
+         ${this.riskRewardRatioMin}`],
+      ['max', 
+      `${this.messageService.get('tradingBookSettings.riskRewardRatio.max')} 
+       ${this.riskRewardRatioMax}`],
     ]))
 
     this.controlErrorMessages.set(this.riskPerTrade, new Map<string, string>([
-      ['required', 'Informar a porcentagem de risco por negociação é obrigatório!'],
-      ['min', `Risco por negociação minimo é de ${this.riskPerTradeMin}%`],
-      ['max', `Risco por negociação maximo é de ${this.riskPerTradeMax}%`]
+      ['required', this.messageService.get('tradingBookSettings.riskPerTrade.required')],
+      ['min', 
+        `${this.messageService.get('tradingBookSettings.riskPerTrade.min')} 
+         ${this.riskPerTradeMin}%`],
+      ['max', 
+      `${this.messageService.get('tradingBookSettings.riskPerTrade.max')} 
+       ${this.riskPerTradeMax}%`],
     ]))
 
     this.controlErrorMessages.set(this.totalCaptal, new Map<string, string>([
-      ['required', 'Informar o captal total é obrigatório'],
-      ['min', `Capital total minimo é ${this.totalCaptalMin}`],
-      ['max', `Capital total máximo é ${this.totalCaptalMax}`]
+      ['required', this.messageService.get('tradingBookSettings.capital.required')],
+      ['min', 
+        `${this.messageService.get('tradingBookSettings.capital.min')} 
+         ${this.totalCaptalMin}`],
+      ['max', 
+      `${this.messageService.get('tradingBookSettings.capital.max')} 
+       ${this.totalCaptalMax}`],
     ]))
   }
 

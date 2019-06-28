@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="tradingBook.portfolioNameInput.placeholder" datatype="html">
+        <source>Portfolio Name</source>
+        <target>Nome do portifolio</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-book-settings/trading-book-settings.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBook.capitalPerTradingInput.placeholder" datatype="html">
+        <source>% Acceptable capital per trading</source>
+        <target>% Capital por negociação aceitável</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-book-settings/trading-book-settings.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBook.riskRewarRatioInput.placeholder" datatype="html">
+        <source>Acceptable risk reward ratio</source>
+        <target>Relação risco ganho aceitavel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-book-settings/trading-book-settings.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBook.riskPerTradingInput.placeholder" datatype="html">
+        <source>% Acceptable risk per trading</source>
+        <target>% Risco por negociação aceitável</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-book-settings/trading-book-settings.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBook.capitalInput.placeholder" datatype="html">
+        <source>Capital</source>
+        <target>Capital</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-book-settings/trading-book-settings.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBook.noButton" datatype="html">
+        <source>No, thanks!</source>
+        <target>Não, obrigado!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-book-settings/trading-book-settings.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBook.okButton" datatype="html">
+        <source>Ok</source>
+        <target>OK</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-book-settings/trading-book-settings.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBooks.introductionHeader" datatype="html">
+        <source>
+            Hey! Looks you are new here...
+        </source>
+        <target>
+            Olá! Pelo visto você é novo por aqui...
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-books.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBooks.introductionText" datatype="html">
+        <source>
+            Get Started with the risk management&apos;s your trading portfolio
+        </source>
+        <target>
+            Comece com o gerenciamento de risco do seu portfolio de negociação
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-books.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="tradingBooks.createPortfolioButton" datatype="html">
+        <source>
+            Create your first trading portfolio
+        </source>
+        <target>
+            Crie seu primeiro portifolio de negociação
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/trading-books/trading-books.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

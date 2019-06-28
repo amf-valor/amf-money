@@ -51,6 +51,13 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "pt-BR": {
+              "aot": true,
+              "outputPath": "dist/portal/pt-BR",
+              "i18nFile": "src/locale/messages.pt-BR.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "pt-BR"
             }
           }
         },
@@ -62,6 +69,9 @@
           "configurations": {
             "production": {
               "browserTarget": "portal:build:production"
+            },
+            "pt-BR": {
+              "browserTarget": "portal:build:pt-BR"
             }
           }
         },

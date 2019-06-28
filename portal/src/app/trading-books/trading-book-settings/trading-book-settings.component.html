@@ -8,7 +8,8 @@
 
     <amp-input
       [errorMessages]="controlErrorMessages.get(bookName)"
-      placeholder="Nome do book" 
+      i18n-placeholder=@@tradingBook.portfolioNameInput.placeholder
+      placeholder="Portfolio Name" 
       [parentFormGroup]="bookSettingsForm"
       [controlName]="bookName">
     </amp-input>
@@ -18,7 +19,8 @@
       type="number"
       [min]=amountPerCaptalMin
       [max]=amountPerCaptalMax
-      placeholder="% Concentração de capital por boleta"
+      i18n-placeholder=@@tradingBook.capitalPerTradingInput.placeholder
+      placeholder="% Acceptable capital per trading"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
     <amp-input 
@@ -27,7 +29,8 @@
       [min]=riskRewardRatioMin
       [max]=riskRewardRatioMax
       [controlName]=riskRewardRatio 
-      placeholder="Relação risco ganho"
+      i18n-placeholder=@@tradingBook.riskRewarRatioInput.placeholder
+      placeholder="Acceptable risk reward ratio"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
     <amp-input 
@@ -36,7 +39,8 @@
       [min]=riskPerTradeMin
       [max]=riskPerTradeMax
       [controlName]=riskPerTrade 
-      placeholder="% Aceitavel de risco por negociação"
+      i18n-placeholder=@@tradingBook.riskPerTradingInput.placeholder
+      placeholder="% Acceptable risk per trading"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
     <amp-input 
@@ -45,16 +49,21 @@
       [min]=totalCaptalMin
       [max]=totalCaptalMax
       [controlName]=totalCaptal 
-      placeholder="Capital total"
+      i18n-placeholder=@@tradingBook.capitalInput.placeholder
+      placeholder="Capital"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
   </form>
   <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
-    <button mat-button (click)="onNoBtnClick()">Agora Não!</button>
+    <button 
+      mat-button 
+      (click)="onNoBtnClick()"
+      i18n="@@tradingBook.noButton">No, thanks!</button>
     <button mat-raised-button 
             color="primary" 
             (click)="onOkBtnClick()" 
-            [disabled]="!bookSettingsForm.valid">Ok</button>
+            [disabled]="!bookSettingsForm.valid"
+            i18n="@@tradingBook.okButton">Ok</button>
   </div>
 </section>
 

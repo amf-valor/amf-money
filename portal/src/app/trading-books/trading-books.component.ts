@@ -4,6 +4,7 @@ import { TradingBookSettingsComponent } from './trading-book-settings/trading-bo
 import { TradingBook } from './trading-book/trading-book.model';
 import { PortalApiService } from '../services/portal-api.service';
 import { UtilsService } from '../services/utils.service';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'amp-trading-books',
@@ -17,7 +18,8 @@ export class TradingBooksComponent implements OnInit {
   constructor(
     private dialog: MatDialog, 
     private portalApiService: PortalApiService,
-    private utilsService: UtilsService){ }
+    private utilsService: UtilsService,
+    private messageService: MessageService){ }
 
   ngOnInit(){
     this.tradingBooks = []
@@ -33,12 +35,12 @@ export class TradingBooksComponent implements OnInit {
   onCreateBookBtnClick(): void{
     const dialogRef = this.dialog.open(TradingBookSettingsComponent, {
       data: {
-        title: 'Novo Book de ofertas',
+        title: this.messageService.get('tradingBookSettings.add.title'),
         name: '',
-        amountPerCaptal : '',
-        riskRewardRatio : '',
+        amountPerCaptal : 0.15,
+        riskRewardRatio : 3,
         totalCaptal: '',
-        riskPerTrade: ''
+        riskPerTrade: 0.01
       }
     })
     
