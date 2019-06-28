@@ -1,15 +1,18 @@
 <section>
   <h1 mat-dialog-title>{{settings.title}}</h1>
-  <form fxLayout="column" fxLayoutGap="1.2rem" mat-dialog-content [formGroup]="bookSettingsForm" novalidate>
+  <form 
+    fxLayout="column" 
+    fxLayoutGap="1rem" 
+    mat-dialog-content 
+    [formGroup]="bookSettingsForm" novalidate>
+
     <amp-input
-      class="full-width"
       [errorMessages]="controlErrorMessages.get(bookName)"
       placeholder="Nome do book" 
       [parentFormGroup]="bookSettingsForm"
       [controlName]="bookName">
     </amp-input>
-    <amp-input
-      class="full-width" 
+    <amp-input 
       [errorMessages]="controlErrorMessages.get(amountPerCaptal)"
       [controlName]="amountPerCaptal" 
       type="number"
@@ -19,7 +22,6 @@
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
     <amp-input 
-      class="full-width"
       [errorMessages]="controlErrorMessages.get(riskRewardRatio)"
       type="number" 
       [min]=riskRewardRatioMin
@@ -29,7 +31,6 @@
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
     <amp-input 
-      class="full-width"
       [errorMessages]="controlErrorMessages.get(riskPerTrade)"
       type="number" 
       [min]=riskPerTradeMin
@@ -39,7 +40,6 @@
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
     <amp-input 
-      class="full-width"
       [errorMessages]="controlErrorMessages.get(totalCaptal)"
       type="number" 
       [min]=totalCaptalMin
@@ -48,14 +48,14 @@
       placeholder="Capital total"
       [parentFormGroup]="bookSettingsForm">
     </amp-input>
-    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
-      <button mat-button (click)="onNoBtnClick()">Agora Não!</button>
-      <button mat-raised-button 
-              color="primary" 
-              (click)="onOkBtnClick()" 
-              [disabled]="!bookSettingsForm.valid">Ok</button>
-    </div>
   </form>
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
+    <button mat-button (click)="onNoBtnClick()">Agora Não!</button>
+    <button mat-raised-button 
+            color="primary" 
+            (click)="onOkBtnClick()" 
+            [disabled]="!bookSettingsForm.valid">Ok</button>
+  </div>
 </section>
 
 

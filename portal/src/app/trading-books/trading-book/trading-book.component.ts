@@ -84,19 +84,39 @@ export class TradingBookComponent implements OnInit {
           valueGetter: "data.operationType == 'Compra' ? ((data.stopGain - data.price) * data.quantity)"+
             " / ((data.price - data.stopLoss) * data.quantity) : " +
             "(data.price - data.stopGain) / (data.stopLoss - data.price)",
-          valueFormatter: "isNaN(value) ? 0 : value"
-          
+          valueFormatter: "isNaN(value) ? 0 : value",
+          cellStyle: function (params) {
+            if (params.value < params.context.riskRewardRatio){ 
+              return { backgroundColor: '#F44336'};
+            }else{
+              return { backgroundColor: 'white'};
+            }
+          }
         },
         {
           headerName: 'Capital Alocado', 
           field: 'allocatedCaptal',
           cellRenderer: PERCENT_CELL_RENDERER,
-          valueGetter: "(getValue('total') + ctx.totalCaptal) / ctx.totalCaptal -1"
+          valueGetter: "(getValue('total') + ctx.totalCaptal) / ctx.totalCaptal -1",
+          cellStyle: function (params) {
+            if (params.value > params.context.amountPerCaptal){ 
+              return { backgroundColor: '#F44336'};
+            }else{
+              return { backgroundColor: 'white'};
+            }
+          }
         },
         {
           headerName: 'Risco Carteira', 
           field: 'risk',
           cellRenderer: PERCENT_CELL_RENDERER,
+          cellStyle: function (params) {
+            if (params.value > params.context.riskPerTrade){ 
+              return { backgroundColor: '#F44336'};
+            }else{
+              return { backgroundColor: 'white'};
+            }
+          },
           valueGetter: "data.operationType == 'Compra' ? " +
             "((data.price - data.stopLoss) * data.quantity + ctx.totalCaptal) / ctx.totalCaptal -1 "+
             ": (ctx.totalCaptal / (ctx.totalCaptal - ((data.stopLoss - data.price) * data.quantity))) -1"
@@ -112,7 +132,12 @@ export class TradingBookComponent implements OnInit {
     }
   };
 
-  gridContext: { totalCaptal: number; }
+  gridContext: { 
+    totalCaptal: number, 
+    riskRewardRatio: number,
+    amountPerCaptal: number,
+    riskPerTrade: number 
+  }
 
   constructor(private portalApiService: PortalApiService, 
     private utilsService: UtilsService,
@@ -120,7 +145,10 @@ export class TradingBookComponent implements OnInit {
 
   ngOnInit() {
     this.gridContext = {
-      totalCaptal: this.tradingBook.setting.totalCaptal
+      totalCaptal: this.tradingBook.setting.totalCaptal,
+      riskRewardRatio: this.tradingBook.setting.riskRewardRatio,
+      amountPerCaptal: this.tradingBook.setting.amountPerCaptal,
+      riskPerTrade: this.tradingBook.setting.riskPerTrade
     }
   }
 

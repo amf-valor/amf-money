@@ -1,18 +1,20 @@
-
-<section *ngIf="tradingBooks.length == 0;else contentHasBooks" 
-    fxLayout="column"   
-    fxLayoutAlign="center center"
-    class="heigth-70">
-    <h1>
-        Pelo visto é novo por aqui!
-    </h1>
-    <p>Comece já o gerenciamento de risco do seu book de ofertas no mercado.</p>
-    <button mat-raised-button color="primary" (click) = "onCreateBookBtnClick()">
-        Crie seu primeiro book de ofertas
-    </button>
+<section 
+    *ngIf="tradingBooks.length == 0;else contentHasBooks" 
+    class="content"
+    fxLayoutAlign="center center">
+    
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <h1>
+            Pelo visto é novo por aqui!
+        </h1>
+        <p>Comece já o gerenciamento de risco do seu book de ofertas no mercado.</p>
+        <button mat-raised-button color="primary" (click) = "onCreateBookBtnClick()">
+            Crie seu primeiro book de ofertas
+        </button>
+    </div>
 </section>
 <ng-template #contentHasBooks>
-    <div *ngFor="let tradingBook of tradingBooks" class="full-width heigth-70">
+    <div *ngFor="let tradingBook of tradingBooks" class="content" fxLayout="column">
         <amp-trading-book [tradingBook]="tradingBook"></amp-trading-book>
     </div>
 </ng-template>
