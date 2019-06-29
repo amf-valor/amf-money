@@ -25,5 +25,5 @@
     (gridReady)="onGridReady($event)">
 </ag-grid-angular>
 <div fxLayoutAlign="end center" class="trading-book-info">
-    <span>Capital Total: {{tradingBook.setting.totalCaptal | currency:'BRL'}}</span>
+    <amp-money-label title="Capital: "[value]="tradingBook.setting.totalCaptal"></amp-money-label>
 </div>

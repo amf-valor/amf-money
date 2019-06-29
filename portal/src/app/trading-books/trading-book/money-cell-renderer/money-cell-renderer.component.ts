@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, LOCALE_ID } from '@angular/core';
 
 @Component({
   selector: 'amp-money-cell-renderer',
-  template: `<span>{{params.value | currency:'BRL'}}</span>`
+  template: `<span>{{params.value | currency:coin}}</span>`
 })
-export class MoneyCellRendererComponent implements OnInit {
+export class MoneyCellRendererComponent {
 
   params: any;
+  coin: string;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(@Inject(LOCALE_ID) localeId: string) { 
+    if(localeId == 'pt-BR'){
+      this.coin = 'BRL';
+    }
   }
 
   agInit(params: any): void {
@@ -18,4 +20,4 @@ export class MoneyCellRendererComponent implements OnInit {
   }
 }
 
-export const MONEY_CELL_RENDERER = 'moneyCellRendererComponent'
+export const MONEY_CELL_RENDERER = 'moneyCellRenderer'

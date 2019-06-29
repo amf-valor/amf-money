@@ -6,9 +6,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatToolbarModule, MatDialogModule, MatInputModule, MatSnackBarModule, MatSelect, MatSelectModule, MatIconModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MoneyLabelComponent } from './money-label/money-label.component';
 
 @NgModule({
-  declarations: [InputComponent],
+  declarations: [InputComponent, MoneyLabelComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -26,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     InputComponent,
+    MoneyLabelComponent,
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,

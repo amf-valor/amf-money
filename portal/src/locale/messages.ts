@@ -16,7 +16,18 @@ export class Messages{
         ['tradingBookSettings.capital.max', 'Capital maximum is '],
         ['notification.agree','got it!'],
         ['notification.network.error',
-        'Oops! something went wrong with our servers, please try again later']
+        'Oops! something went wrong with our servers, please try again later'],
+        ['tradingBook.grid.tradingHeaderName', 'Trading'],
+        ['tradingBook.grid.operationTypeHeaderName', 'Trade Type'],
+        ['tradingBook.grid.operationTypeBuy', 'Buy'],
+        ['tradingBook.grid.operationTypeSell', 'Sell'],
+        ['tradingBook.grid.assetHeaderName', 'Asset'],
+        ['tradingBook.grid.quantityHeaderName', 'Quantity'],
+        ['tradingBook.grid.priceHeaderName', 'Price'],
+        ['tradingBook.grid.riskManagementHeaderName', 'Risk management'],
+        ['tradingBook.grid.riskRewardHeaderName', 'Risk Reward'],
+        ['tradingBook.grid.riskHeaderName', 'Portfolio Risk'],
+        ['tradingBook.sync.success', 'your portfolio was sync!']
     ])
 
     static readonly ptBR: Map<string, string> = new Map<string, string>([
@@ -38,7 +49,17 @@ export class Messages{
         ['tradingBookSettings.capital.max', 'Capital maximo é '],
         ['notification.agree','entendi!'],
         ['notification.network.error',
-        'Oops! nossos servidores estão enfrentando dificuldades tente novamente mais tarde!']
+        'Oops! nossos servidores estão enfrentando dificuldades tente novamente mais tarde!'],
+        ['tradingBook.grid.tradingHeaderName', 'Negociação'],
+        ['tradingBook.grid.operationTypeHeaderName', 'Tipo operação'],
+        ['tradingBook.grid.operationTypeBuy', 'Compra'],
+        ['tradingBook.grid.operationTypeSell', 'Venda'],
+        ['tradingBook.grid.assetHeaderName', 'Ativo'],
+        ['tradingBook.grid.priceHeaderName', 'Preço'],
+        ['tradingBook.grid.riskManagementHeaderName', 'Gerenciamento de risco'],
+        ['tradingBook.grid.riskRewardHeaderName', 'Risco Ganho'],
+        ['tradingBook.grid.riskHeaderName', 'Risco Carteira'],
+        ['tradingBook.sync.success', 'portifolio sincronizado!']
     ])
 }
 
