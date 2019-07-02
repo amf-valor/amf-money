@@ -1,7 +1,6 @@
 ﻿using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 
 namespace AmfValor.AmfMoney.PortalApi.Controllers

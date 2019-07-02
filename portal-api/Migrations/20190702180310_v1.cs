@@ -27,6 +27,25 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Birth = table.Column<DateTime>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Email = table.Column<string>(maxLength: 100, nullable: false),
+                    PasswordHashed = table.Column<byte[]>(nullable: false),
+                    PasswordSalt = table.Column<byte[]>(nullable: false),
+                    PinHashed = table.Column<byte[]>(nullable: false),
+                    PinSalt = table.Column<byte[]>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Trades",
                 columns: table => new
                 {
@@ -61,6 +80,9 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Trades");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "TradingBooks");

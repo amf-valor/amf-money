@@ -17,6 +17,39 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Data.Model.UserEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Birth");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<byte[]>("PasswordHashed")
+                        .IsRequired();
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired();
+
+                    b.Property<byte[]>("PinHashed")
+                        .IsRequired();
+
+                    b.Property<byte[]>("PinSalt")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.Trade", b =>
                 {
                     b.Property<int>("Id")
@@ -74,7 +107,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
 
             modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.TradingBook", b =>
                 {
-                    b.OwnsOne("AmfValor.AmfMoney.PortalApi.Model.Setting", "TheSetting", b1 =>
+                    b.OwnsOne("AmfValor.AmfMoney.PortalApi.Model.TradingBookSetting", "Setting", b1 =>
                         {
                             b1.Property<int>("TradingBookId");
 
@@ -107,8 +140,8 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                             b1.ToTable("TradingBooks");
 
                             b1.HasOne("AmfValor.AmfMoney.PortalApi.Model.TradingBook")
-                                .WithOne("TheSetting")
-                                .HasForeignKey("AmfValor.AmfMoney.PortalApi.Model.Setting", "TradingBookId")
+                                .WithOne("Setting")
+                                .HasForeignKey("AmfValor.AmfMoney.PortalApi.Model.TradingBookSetting", "TradingBookId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

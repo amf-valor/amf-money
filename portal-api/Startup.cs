@@ -23,9 +23,10 @@ namespace AmfValor.AmfMoney.PortalApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["MySqlConnection:ConnectionString"];
+            var connectionString = Configuration["MySqlConnection:local"];
             services.AddDbContext<AmfMoneyContext>(options => options.UseMySql(connectionString));
             services.AddTransient<ITradingBookService, TradingBookService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddApiVersioning();
 
             services.AddCors(options => 
