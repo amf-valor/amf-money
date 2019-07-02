@@ -4,8 +4,7 @@ import { TradingBooksComponent } from './trading-books/trading-books.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  {path:'', component: HomeComponent},
-  {path:'tradingBooks', component: TradingBooksComponent}
+  {path:'', component: TradingBooksComponent}
 ];
 
 @NgModule({

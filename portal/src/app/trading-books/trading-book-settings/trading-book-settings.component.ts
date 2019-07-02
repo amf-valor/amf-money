@@ -116,7 +116,7 @@ export class TradingBookSettingsComponent implements OnInit {
       name: this.bookSettingsForm.get(this.bookName).value,
       amountPerCaptal: this.bookSettingsForm.get(this.amountPerCaptal).value / 100,
       riskRewardRatio: this.bookSettingsForm.get(this.riskRewardRatio).value,
-      totalCaptal: this.bookSettingsForm.get(this.totalCaptal).value,
+      totalCaptal: Number(this.bookSettingsForm.get(this.totalCaptal).value),
       riskPerTrade: this.bookSettingsForm.get(this.riskPerTrade).value / 100,
     }
     this.dialogRef.close(settings)

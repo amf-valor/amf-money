@@ -24,12 +24,12 @@ export class TradingBooksComponent implements OnInit {
   ngOnInit(){
     this.tradingBooks = []
 
-    this.portalApiService.getAllTradingBooks()
-      .subscribe(tradingBooks => {
-        this.tradingBooks = tradingBooks
-      }, err => {
-        this.utilsService.showNetworkError()
-      })
+    // this.portalApiService.getAllTradingBooks()
+    //   .subscribe(tradingBooks => {
+    //     this.tradingBooks = tradingBooks
+    //   }, err => {
+    //     this.utilsService.showNetworkError()
+    //   })
   }
 
   onCreateBookBtnClick(): void{
@@ -46,15 +46,20 @@ export class TradingBooksComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(settings => {
       if(settings !== undefined){
-        this.portalApiService.createTradingBook(settings)
-        .subscribe(newId => {
-          const tradingBook: TradingBook = {
-            id: newId,
-            setting: settings,
-            trades: []
-          } 
-          this.tradingBooks.push(tradingBook)
-        }, err => this.utilsService.showNetworkError())
+        this.tradingBooks.push({
+          id:0,
+          setting: settings,
+          trades: []
+        })
+        // this.portalApiService.createTradingBook(settings)
+        // .subscribe(newId => {
+        //   const tradingBook: TradingBook = {
+        //     id: newId,
+        //     setting: settings,
+        //     trades: []
+        //   } 
+        //   this.tradingBooks.push(tradingBook)
+        // }, err => this.utilsService.showNetworkError())
       }
     })
   }

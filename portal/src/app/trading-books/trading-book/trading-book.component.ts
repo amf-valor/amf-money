@@ -178,18 +178,14 @@ export class TradingBookComponent implements OnInit {
   }
 
   onAddNewRowClick(){   
-    const empty = {
+    const empty: Trade = {
       id: 0,  
       operationType:'',
       asset: '',
       quantity: 0,
       price: 0,
-      total: 0,
       stopLoss: 0,
       stopGain: 0,
-      riskRewardRatio: 0,
-      allocatedCaptal: 0,
-      risk: 0
     }
     this.gridApi.updateRowData({ add: [empty] });
   }
@@ -233,13 +229,15 @@ export class TradingBookComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(newSettings => {
       if(newSettings !== undefined){
-        this.portalApiService.updateSettings(this.tradingBook.id, newSettings)
-          .subscribe(() => {
-            this.tradingBook.setting = newSettings
-            this.utilsService.showMessage("configurações atualizadas com sucesso!")
-          }, err => {
-            this.utilsService.showNetworkError()
-          })    
+        this.tradingBook.setting = newSettings
+        this.initGridContext();
+        // this.portalApiService.updateSettings(this.tradingBook.id, newSettings)
+        //   .subscribe(() => {
+        //     this.tradingBook.setting = newSettings
+        //     this.utilsService.showMessage("configurações atualizadas com sucesso!")
+        //   }, err => {
+        //     this.utilsService.showNetworkError()
+        //   })    
       }
     })
   }
