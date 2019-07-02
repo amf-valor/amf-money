@@ -1,0 +1,38 @@
+<form [formGroup]="signUpForm" fxLayout="column" fxLayoutGap="1rem" class="form-content">
+  <amp-input-date
+    [errorMessages]="controlErrorMessages.get(dateOfBirth)"
+    i18n-placeholder=@@signUp.dateOfBirthInput.placeholder 
+    placeholder="Date of birth" 
+    [controlName]=dateOfBirth
+    [parentFormGroup]="signUpForm">
+  </amp-input-date>  
+  <amp-input  
+    [errorMessages]="controlErrorMessages.get(email)"
+    placeholder="E-mail"
+    [parentFormGroup]="signUpForm"
+    [controlName]=email>
+  </amp-input>
+  <amp-input 
+    [errorMessages]="controlErrorMessages.get(password)"
+    type="password" 
+    i18n-placeholder=@@signUp.passwordInput.placeholder
+    placeholder="Password"
+    [parentFormGroup]="signUpForm"
+    [controlName]=password>
+  </amp-input>
+  <amp-input 
+    [errorMessages]="controlErrorMessages.get(pin)"
+    type="password" 
+    placeholder="PIN"
+    [parentFormGroup]="signUpForm"
+    [controlName]=pin>
+  </amp-input>
+  <div fxLayoutAlign="end end">
+    <button 
+      [disabled]="!signUpForm.valid" 
+      mat-raised-button color="primary" 
+      i18n=@@signUp.signUpButton.text>Sign - Up</button>
+  </div>
+</form>
+
+

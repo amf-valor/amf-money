@@ -27,7 +27,21 @@ export class Messages{
         ['tradingBook.grid.riskManagementHeaderName', 'Risk management'],
         ['tradingBook.grid.riskRewardHeaderName', 'Risk Reward'],
         ['tradingBook.grid.riskHeaderName', 'Portfolio Risk'],
-        ['tradingBook.sync.success', 'your portfolio was sync!']
+        ['tradingBook.sync.success', 'your portfolio was sync!'],
+        ['signUp.dateOfBirth.required','date of bith is required'],
+        ['signUp.email.required','e-mail is required'],
+        ['signUp.email.emailError','you must provide a valid e-mail address'],
+        ['signUp.password.required','password is required'],
+        ['signUp.password.minlength', 'password must contain at least '],
+        ['signUp.pin.required', 'pin is required'],
+        ['signUp.pin.minlength', 'pin must contain exact '],
+        ['signUp.pin.minlength2', ' characteres'],
+        ['signUp.pin.maxlength', 'pin must contain exact '],
+        ['signUp.pin.maxlength2', ' characteres'],
+        ['login.email.required','e-mail is required'],
+        ['login.email.emailError','you must provide a valid e-mail address'],
+        ['login.password.required','password is required'],
+        ['login.password.minlength', 'password must contain at least ']
     ])
 
     static readonly ptBR: Map<string, string> = new Map<string, string>([
@@ -59,7 +73,21 @@ export class Messages{
         ['tradingBook.grid.riskManagementHeaderName', 'Gerenciamento de risco'],
         ['tradingBook.grid.riskRewardHeaderName', 'Risco Ganho'],
         ['tradingBook.grid.riskHeaderName', 'Risco Carteira'],
-        ['tradingBook.sync.success', 'portifolio sincronizado!']
+        ['tradingBook.sync.success', 'portifolio sincronizado!'],
+        ['signUp.dateOfBirth.required','data de nascimento é obrigatório'],
+        ['signUp.email.required','e-mail é obrigatório'],
+        ['signUp.email.emailError','insira um e-mail válido'],
+        ['signUp.password.required','senha é obrigatória'],
+        ['signUp.password.minlength', 'senha deve conter no minimo '],
+        ['signUp.pin.required', 'pin é obrigatório'],
+        ['signUp.pin.minlength', 'pin deve ter exatamente '],
+        ['signUp.pin.minlength2', ' caracteres'],
+        ['signUp.pin.maxlength', 'pin deve ter exatamente '],
+        ['signUp.pin.maxlength2', ' caracteres'],
+        ['login.email.required','e-mail é obrigatório'],
+        ['login.email.emailError','insira um e-mail válido'],
+        ['login.password.required','senha é obrigatória'],
+        ['login.password.minlength', 'senha deve conter no minimo '],
     ])
 }
 

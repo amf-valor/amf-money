@@ -1,0 +1,14 @@
+<mat-form-field [formGroup]="parentFormGroup">
+    <input 
+      matInput 
+      [matDatepicker]="picker" 
+      placeholder={{placeholder}}
+      formControlName={{controlName}}>
+
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    
+    <mat-error *ngIf="hasError()">
+      {{errorMessage}}
+    </mat-error>
+  </mat-form-field>

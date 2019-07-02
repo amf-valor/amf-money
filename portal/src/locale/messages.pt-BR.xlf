@@ -94,6 +94,54 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="home.signUpTab.label" datatype="html">
+        <source>Sign - Up</source>
+        <target>Cadastro</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signUp.dateOfBirthInput.placeholder" datatype="html">
+        <source>Date of birth</source>
+        <target>Data de nascimento</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/sign-up/sign-up.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signUp.passwordInput.placeholder" datatype="html">
+        <source>Password</source>
+        <target>Senha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/sign-up/sign-up.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signUp.signUpButton.text" datatype="html">
+        <source>Sign - Up</source>
+        <target>Efetuar cadastro</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/sign-up/sign-up.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.passwordInput.placeholder" datatype="html">
+        <source>Password</source>
+        <target>Senha</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/login/login.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login.forgotPasswordButton.text" datatype="html">
+        <source>Forgot password?</source>
+        <target>Esqueceu a senha?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/login/login.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

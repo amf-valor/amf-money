@@ -1,0 +1,24 @@
+<form [formGroup]="loginForm" fxLayout="column" fxLayoutGap="1rem" class="form-content">
+    <amp-input  
+      [errorMessages]="controlErrorMessages.get(email)"
+      placeholder="E-mail"
+      [parentFormGroup]="loginForm"
+      [controlName]=email>
+    </amp-input>
+    <amp-input 
+      [errorMessages]="controlErrorMessages.get(password)"
+      type="password" 
+      i18n-placeholder=@@login.passwordInput.placeholder
+      placeholder="Password"
+      [parentFormGroup]="loginForm"
+      [controlName]=password>
+    </amp-input>
+    <div fxLayoutAlign="end end" fxLayoutGap="1rem">
+      <button mat-button i18n=@@login.forgotPasswordButton.text>Forgot password?</button>
+      <button 
+        [disabled]="!loginForm.valid" 
+        mat-raised-button color="primary">Login</button>
+    </div>
+  </form>
+  
+  

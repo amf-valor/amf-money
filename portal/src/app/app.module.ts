@@ -12,6 +12,9 @@ import { NumericCellEditorComponent } from './trading-books/numeric-cell-editor/
 import { MoneyCellRendererComponent } from './trading-books/trading-book/money-cell-renderer/money-cell-renderer.component';
 import { PercentCellRendererComponent } from './trading-books/trading-book/percent-cell-renderer/percent-cell-renderer.component';
 import { FooterComponent } from './footer/footer.component';
+import { SignUpComponent } from './home/sign-up/sign-up.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './home/login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { FooterComponent } from './footer/footer.component';
     MoneyCellRendererComponent,
     PercentCellRendererComponent,
     FooterComponent,
+    SignUpComponent,
+    HomeComponent,
+    LoginComponent,
   ],
   imports: [
     AppRoutingModule,

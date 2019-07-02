@@ -33,12 +33,14 @@ export class InputComponent implements OnInit, AfterContentInit {
   }
 
   get errorMessage() {
+    if(this.errorMessages === undefined){
+      return ""
+    }
     for (const error in this.control.errors) {
       if (this.control.errors.hasOwnProperty(error) && this.control.touched) {
         return this.errorMessages.get(error)
       }
     }
-
     return null
   }
 
