@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmfValor.AmfMoney.PortalApi.Data.Model
 {
-    public class UserEntity
+    public class AccountEntity
     {
         public int Id { get; set; }
         [Required]

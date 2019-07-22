@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AmfValor.AmfMoney.PortalApi.Data
 {
-    public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
+    public class AccountEntityConfiguration : IEntityTypeConfiguration<AccountEntity>
     {
-        public void Configure(EntityTypeBuilder<UserEntity> builder)
+        public void Configure(EntityTypeBuilder<AccountEntity> builder)
         {
             builder.Property(t => t.CreatedAt)
                .HasColumnType("timestamp")

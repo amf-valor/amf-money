@@ -2,8 +2,9 @@
 
 namespace AmfValor.AmfMoney.PortalApi.Services.Contract
 {
-    public interface IUserService
+    public interface IAccountService
     {
-        int SignUp(User user);
+        bool CheckIfExists(string email);
+        int SignUp(Account account);
     }
 }

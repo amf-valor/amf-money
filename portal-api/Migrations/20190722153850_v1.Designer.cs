@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmfValor.AmfMoney.PortalApi.Migrations
 {
     [DbContext(typeof(AmfMoneyContext))]
-    [Migration("20190702180310_v1")]
+    [Migration("20190722153850_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Data.Model.UserEntity", b =>
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Data.Model.AccountEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -49,7 +49,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.Trade", b =>

@@ -2,35 +2,44 @@
 using AmfValor.AmfMoney.PortalApi.Data.Model;
 using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
+using System.Linq;
 using System.Text;
 
 namespace AmfValor.AmfMoney.PortalApi.Services
 {
-    public class UserService : Service, IUserService
+    public class AccountService : Service, IAccountService
     {
-        public UserService(AmfMoneyContext context) : base(context){}
-        public int SignUp(User user)
+        public AccountService(AmfMoneyContext context) : base(context){}
+
+        public bool CheckIfExists(string email)
+        {
+            return _context.Accounts.Where(u => u.Email.Equals(email)).Any();   
+        }
+
+        public int SignUp(Account account)
         {
             var passwordSalt = CryptoService.CreateSalt();
             var passwordHash = CryptoService.ComputeSHA256Hash(
-                Encoding.UTF8.GetBytes(user.Password), passwordSalt);
+                Encoding.UTF8.GetBytes(account.Password), passwordSalt);
             var pinSalt = CryptoService.CreateSalt();
             var pinHash = CryptoService.ComputeSHA256Hash(
-                Encoding.UTF8.GetBytes(user.Pin), pinSalt);
+                Encoding.UTF8.GetBytes(account.Pin), pinSalt);
 
-            var userEntity = new UserEntity()
+            var accountEntity = new AccountEntity()
             {
-                Birth = user.Birth,
-                Email = user.Email,
+                Birth = account.Birth,
+                Email = account.Email,
                 PasswordHashed = passwordHash,
                 PasswordSalt = passwordSalt,
                 PinHashed =  pinHash,
                 PinSalt = pinSalt
             };
 
-            _context.Users.Add(userEntity);
+            _context.Accounts.Add(accountEntity);
             _context.SaveChanges();
-            return userEntity.Id;
+            return accountEntity.Id;
         }
+
+
     }
 }

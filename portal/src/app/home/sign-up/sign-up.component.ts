@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/services/message.service';
+import { PortalApiService } from 'src/app/services/portal-api.service';
+import { Account } from '../sign-up/account.model'
+import { UtilsService } from 'src/app/services/utils.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'amp-sign-up',
@@ -12,7 +16,11 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup
   controlErrorMessages: Map<string, Map<string, string>>
 
-  constructor(private formBuilder: FormBuilder, private messageService: MessageService) { }
+  constructor(private formBuilder: FormBuilder, 
+    private messageService: MessageService,
+    private portalApiService: PortalApiService,
+    private utilsService: UtilsService,
+    private router: Router) { }
 
   ngOnInit() {
     this.initSignUpForm()
@@ -83,6 +91,25 @@ export class SignUpComponent implements OnInit {
 
   get pinLength () : number{
     return 4
+  }
+
+  onSignUpButtonClick(): void{
+    const account: Account = {
+      birth: this.signUpForm.get(this.dateOfBirth).value,
+      email: this.signUpForm.get(this.email).value,
+      password: this.signUpForm.get(this.password).value,
+      pin: this.signUpForm.get(this.pin).value 
+    }
+    this.portalApiService.post(account)
+        .subscribe(() => {
+          this.router.navigate(['./tradingBooks']);
+        }, err => {
+          if(err.status == 409){
+            this.utilsService.showMessage(this.messageService.get('signUp.email.alreadyExists'))
+          }else{
+            this.utilsService.showNetworkError()
+          }
+        }) 
   }
 
 }

@@ -9,6 +9,25 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Accounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Birth = table.Column<DateTime>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Email = table.Column<string>(maxLength: 100, nullable: false),
+                    PasswordHashed = table.Column<byte[]>(nullable: false),
+                    PasswordSalt = table.Column<byte[]>(nullable: false),
+                    PinHashed = table.Column<byte[]>(nullable: false),
+                    PinSalt = table.Column<byte[]>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TradingBooks",
                 columns: table => new
                 {
@@ -24,25 +43,6 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TradingBooks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Birth = table.Column<DateTime>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    Email = table.Column<string>(maxLength: 100, nullable: false),
-                    PasswordHashed = table.Column<byte[]>(nullable: false),
-                    PasswordSalt = table.Column<byte[]>(nullable: false),
-                    PinHashed = table.Column<byte[]>(nullable: false),
-                    PinSalt = table.Column<byte[]>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,10 +79,10 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Trades");
+                name: "Accounts");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Trades");
 
             migrationBuilder.DropTable(
                 name: "TradingBooks");

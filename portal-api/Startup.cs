@@ -26,7 +26,7 @@ namespace AmfValor.AmfMoney.PortalApi
             var connectionString = Configuration["MySqlConnection:local"];
             services.AddDbContext<AmfMoneyContext>(options => options.UseMySql(connectionString));
             services.AddTransient<ITradingBookService, TradingBookService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddApiVersioning();
 
             services.AddCors(options => 

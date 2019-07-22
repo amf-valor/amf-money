@@ -17,7 +17,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Data.Model.UserEntity", b =>
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Data.Model.AccountEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -47,7 +47,7 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.Trade", b =>

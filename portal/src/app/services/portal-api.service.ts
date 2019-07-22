@@ -5,6 +5,7 @@ import { TradingBook } from '../trading-books/trading-book/trading-book.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Trade } from '../trading-books/trading-book/trade.model';
+import { Account } from '../home/sign-up/account.model';
 import { TradingBookSettings } from '../trading-books/trading-book-settings/trading-book-settings.model';
 
 @Injectable({
@@ -29,12 +30,12 @@ export class PortalApiService {
       {headers: httpHeaders})                    
   }
 
-  updateTrades(tradingBookId, trades: Trade[]): Observable<any>{
+  updateTrades(tradingBookId, trades: Trade[]): Observable<void>{
     const httpHeaders = { 'Content-Type': 'application/json'}
     return this.httpClient.put(
       `${environment.PORTAL_API_ADDRESS}/v1/tradingBooks/${tradingBookId}/trades`,
        JSON.stringify(trades),
-       {headers: httpHeaders})
+       {headers: httpHeaders}).pipe(map(()=> {return Observable.create()}))
   }
 
   updateSettings(tradingBookId: number, settings: TradingBookSettings): Observable<void>{
@@ -44,4 +45,13 @@ export class PortalApiService {
        JSON.stringify(settings),
        {headers: httpHeaders}).pipe(map(()=> {return Observable.create()}))
   }
+
+  post(account: Account): Observable<number>{
+    const httpHeaders = { 'Content-Type': 'application/json'}
+    return this.httpClient.post<number>(
+      `${environment.PORTAL_API_ADDRESS}/v1/accounts`,
+       JSON.stringify(account),
+       {headers: httpHeaders})
+  }
+
 }

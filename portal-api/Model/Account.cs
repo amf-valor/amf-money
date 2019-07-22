@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmfValor.AmfMoney.PortalApi.Model
 {
-    public class User
+    public class Account
     {
         [Required]
         public DateTime Birth { get; set; }

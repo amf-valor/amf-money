@@ -31,7 +31,8 @@
     <button 
       [disabled]="!signUpForm.valid" 
       mat-raised-button color="primary" 
-      i18n=@@signUp.signUpButton.text>Sign - Up</button>
+      i18n=@@signUp.signUpButton.text
+      (click)="onSignUpButtonClick()">Sign - Up</button>
   </div>
 </form>
 
