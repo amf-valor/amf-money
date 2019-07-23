@@ -54,8 +54,8 @@ namespace PortalApi.UnitTests.Services
                 {
                     Birth = new DateTime(1991, 03, 15),
                     Email = emailToBeChecked,
-                    PasswordHashed = new byte[] { 1, 2},
-                    PinHashed = new byte[] { 1, 2 },
+                    HashedPassword = new byte[] { 1, 2},
+                    HashedPin = new byte[] { 1, 2 },
                     PasswordSalt = new byte[] { 1, 2 },
                     PinSalt = new byte[] { 1, 2 }
                 };
@@ -79,8 +79,8 @@ namespace PortalApi.UnitTests.Services
                 {
                     Birth = new DateTime(1991, 03, 15),
                     Email = "alan-1503@hotmail.com",
-                    PasswordHashed = new byte[] { 1, 2 },
-                    PinHashed = new byte[] { 1, 2 },
+                    HashedPassword = new byte[] { 1, 2 },
+                    HashedPin = new byte[] { 1, 2 },
                     PasswordSalt = new byte[] { 1, 2 },
                     PinSalt = new byte[] { 1, 2 }
                 };
@@ -93,6 +93,50 @@ namespace PortalApi.UnitTests.Services
             bool actual = accountService.CheckIfExists("amfmoney@amfmoney.com");
 
             Assert.False(actual);
+        }
+
+        [Fact]
+        public void ShouldNotGrantAccessForNonExistingAccount()
+        {
+            var accountService = new AccountService(new AmfMoneyContext(_options));
+            bool actual = accountService.Authenticate("test@test.com", "");
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public void ShouldNotGrantAccessWhenPasswordNotMatch()
+        {
+            var accountService = new AccountService(new AmfMoneyContext(_options));
+            Account account = new Account()
+            {
+                Birth = new DateTime(1991, 03, 15),
+                Email = "alan-1503@hotmail.com",
+                Password = "12345678",
+                Pin = "1234"
+            };
+
+            accountService.SignUp(account);
+            bool actual = accountService.Authenticate("alan-1503@hotmail.com", "djsaklj");
+
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public void ShouldGrantAccessWhenPasswordMatches()
+        {
+            var accountService = new AccountService(new AmfMoneyContext(_options));
+            Account account = new Account()
+            {
+                Birth = new DateTime(1991, 03, 15),
+                Email = "alan-1503@hotmail.com",
+                Password = "12345678",
+                Pin = "1234"
+            };
+
+            accountService.SignUp(account);
+            bool actual = accountService.Authenticate("alan-1503@hotmail.com", "12345678");
+
+            Assert.True(actual);
         }
     }
 }

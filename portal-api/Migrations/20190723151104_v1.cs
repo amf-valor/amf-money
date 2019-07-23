@@ -17,9 +17,9 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     Birth = table.Column<DateTime>(nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     Email = table.Column<string>(maxLength: 100, nullable: false),
-                    PasswordHashed = table.Column<byte[]>(nullable: false),
+                    HashedPassword = table.Column<byte[]>(nullable: false),
                     PasswordSalt = table.Column<byte[]>(nullable: false),
-                    PinHashed = table.Column<byte[]>(nullable: false),
+                    HashedPin = table.Column<byte[]>(nullable: false),
                     PinSalt = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>

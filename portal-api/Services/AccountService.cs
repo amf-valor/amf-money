@@ -29,9 +29,9 @@ namespace AmfValor.AmfMoney.PortalApi.Services
             {
                 Birth = account.Birth,
                 Email = account.Email,
-                PasswordHashed = passwordHash,
+                HashedPassword = passwordHash,
                 PasswordSalt = passwordSalt,
-                PinHashed =  pinHash,
+                HashedPin =  pinHash,
                 PinSalt = pinSalt
             };
 
@@ -39,7 +39,15 @@ namespace AmfValor.AmfMoney.PortalApi.Services
             _context.SaveChanges();
             return accountEntity.Id;
         }
+        public bool Authenticate(string email, string password)
+        {
+            AccountEntity account =_context.Accounts.Where(u => u.Email.Equals(email)).FirstOrDefault();
 
+            if (account == null)
+                return false;
 
+            var hashedPassword = CryptoService.ComputeSHA256Hash(Encoding.UTF8.GetBytes(password), account.PasswordSalt);
+            return hashedPassword.SequenceEqual(account.HashedPassword);
+        }
     }
 }

@@ -13,11 +13,11 @@ namespace AmfValor.AmfMoney.PortalApi.Data.Model
         [StringLength(100)]
         public string Email { get; set; }
         [Required]
-        public byte[] PasswordHashed { get; set; }
+        public byte[] HashedPassword { get; set; }
         [Required]
         public byte[] PasswordSalt { get; set; }
         [Required]
-        public byte[] PinHashed { get; set; }
+        public byte[] HashedPin { get; set; }
         [Required]
         public byte[] PinSalt { get; set; }
     }

@@ -33,13 +33,13 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<byte[]>("PasswordHashed")
+                    b.Property<byte[]>("HashedPassword")
+                        .IsRequired();
+
+                    b.Property<byte[]>("HashedPin")
                         .IsRequired();
 
                     b.Property<byte[]>("PasswordSalt")
-                        .IsRequired();
-
-                    b.Property<byte[]>("PinHashed")
                         .IsRequired();
 
                     b.Property<byte[]>("PinSalt")

@@ -32,5 +32,24 @@ namespace PortalApi.Controllers
             int id = _accountService.SignUp(account);
             return Ok(new { id });
         }
+
+        [HttpPost]
+        [Route("authenticate")]
+        public IActionResult Authenticate([FromBody]Credential credential)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (_accountService.Authenticate(credential.Email, credential.Password))
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized);
+            }
+        }
     }
 }

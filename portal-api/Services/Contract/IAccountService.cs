@@ -6,5 +6,6 @@ namespace AmfValor.AmfMoney.PortalApi.Services.Contract
     {
         bool CheckIfExists(string email);
         int SignUp(Account account);
+        bool Authenticate(string email, string password);
     }
 }
