@@ -1,5 +1,6 @@
 ﻿using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class TradingBooksController : ControllerBase
     {
         private readonly ITradingBookService _service;

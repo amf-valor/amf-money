@@ -1,5 +1,6 @@
 ﻿using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace PortalApi.Controllers
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class AccountsController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -42,9 +44,9 @@ namespace PortalApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (_accountService.Authenticate(credential.Email, credential.Password))
+            if (_accountService.Authenticate(credential, out Token token))
             {
-                return Ok();
+                return Ok(token);
             }
             else
             {

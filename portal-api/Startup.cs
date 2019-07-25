@@ -1,12 +1,17 @@
 ﻿using AmfValor.AmfMoney.PortalApi.Data;
+using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace AmfValor.AmfMoney.PortalApi
 {
@@ -24,6 +29,18 @@ namespace AmfValor.AmfMoney.PortalApi
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration["MySqlConnection:local"];
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = CredentialsHandler.Credentials.Key,
+                ValidateIssuer = true,
+                ValidIssuer = Token.Issuer,
+                ValidateAudience = true,
+                ValidAudience = Token.Audience,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
+            };
+
             services.AddDbContext<AmfMoneyContext>(options => options.UseMySql(connectionString));
             services.AddTransient<ITradingBookService, TradingBookService>();
             services.AddTransient<IAccountService, AccountService>();
@@ -38,6 +55,24 @@ namespace AmfValor.AmfMoney.PortalApi
                            .AllowAnyMethod();
                 });
             });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+           .AddJwtBearer(options =>
+           {
+               options.TokenValidationParameters = tokenValidationParameters;
+           });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
+            });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -55,6 +90,7 @@ namespace AmfValor.AmfMoney.PortalApi
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseCors(corsPolicyName);
             app.UseHttpsRedirection();
             app.UseMvc();

@@ -2,7 +2,12 @@
 using AmfValor.AmfMoney.PortalApi.Data.Model;
 using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 
 namespace AmfValor.AmfMoney.PortalApi.Services
@@ -39,15 +44,52 @@ namespace AmfValor.AmfMoney.PortalApi.Services
             _context.SaveChanges();
             return accountEntity.Id;
         }
-        public bool Authenticate(string email, string password)
+        public bool Authenticate(Credential credential, out Token token)
         {
-            AccountEntity account =_context.Accounts.Where(u => u.Email.Equals(email)).FirstOrDefault();
+            AccountEntity account =_context.Accounts.Where(u => u.Email.Equals(credential.Email)).FirstOrDefault();
+            token = null;
 
             if (account == null)
                 return false;
 
-            var hashedPassword = CryptoService.ComputeSHA256Hash(Encoding.UTF8.GetBytes(password), account.PasswordSalt);
-            return hashedPassword.SequenceEqual(account.HashedPassword);
+            var hashedPassword = CryptoService.ComputeSHA256Hash(Encoding.UTF8.GetBytes(credential.Password), 
+                account.PasswordSalt);
+
+            bool isValid = hashedPassword.SequenceEqual(account.HashedPassword);
+
+            if (isValid)
+            {
+                token = Create(credential.Email);
+            }
+
+            return isValid;
+        }
+
+        private Token Create(string email)
+        {
+            ClaimsIdentity identity = new ClaimsIdentity(
+                    new GenericIdentity(email, "Email"),
+                    new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
+                        new Claim(JwtRegisteredClaimNames.UniqueName, email)
+                    });
+
+            var handler = new JwtSecurityTokenHandler();
+            DateTime now = DateTime.Now;
+            DateTime expiryAt = now.Add(TimeSpan.FromSeconds(Token.SecondsToExpiry));
+
+            var securityToken = handler.CreateToken(new SecurityTokenDescriptor()
+            {
+                Issuer = Token.Issuer,
+                Audience = Token.Audience,
+                SigningCredentials = CredentialsHandler.Credentials,
+                Subject = identity,
+                NotBefore = now,
+                Expires = expiryAt
+            });
+
+            return new Token(handler.WriteToken(securityToken), now, expiryAt);
         }
     }
 }
