@@ -99,8 +99,16 @@ namespace PortalApi.UnitTests.Services
         public void ShouldNotGrantAccessForNonExistingAccount()
         {
             var accountService = new AccountService(new AmfMoneyContext(_options));
-            bool actual = accountService.Authenticate("test@test.com", "");
+            Credential credential = new Credential()
+            {
+                Email = "test@test.com",
+                Password = ""
+            };
+
+            bool actual = accountService.Authenticate(credential, out Token token);
+
             Assert.False(actual);
+            Assert.Null(token);
         }
 
         [Fact]
@@ -115,10 +123,17 @@ namespace PortalApi.UnitTests.Services
                 Pin = "1234"
             };
 
+            Credential credential = new Credential()
+            {
+                Email = "alan-1503@hotmail.com",
+                Password = "djsaklj"
+            };
+
             accountService.SignUp(account);
-            bool actual = accountService.Authenticate("alan-1503@hotmail.com", "djsaklj");
+            bool actual = accountService.Authenticate(credential, out Token token);
 
             Assert.False(actual);
+            Assert.Null(token);
         }
 
         [Fact]
@@ -132,11 +147,17 @@ namespace PortalApi.UnitTests.Services
                 Password = "12345678",
                 Pin = "1234"
             };
+            Credential credential = new Credential()
+            {
+                Email = "alan-1503@hotmail.com",
+                Password = "12345678"
+            };
 
             accountService.SignUp(account);
-            bool actual = accountService.Authenticate("alan-1503@hotmail.com", "12345678");
+            bool actual = accountService.Authenticate(credential, out Token token);
 
             Assert.True(actual);
+            Assert.NotNull(token);
         }
     }
 }

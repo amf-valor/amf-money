@@ -9,9 +9,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MoneyLabelComponent } from './money-label/money-label.component';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { InputDateComponent } from './input-date/input-date.component';
+import { AuthGuard } from './auth.guard';
+import { UnAuthorizedInterceptor } from './unauthorized.interceptor';
+import { TokenInterceptor } from './token.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticationService } from './authentication.service';
 
 @NgModule({
-  declarations: [InputComponent, MoneyLabelComponent, InputDateComponent],
+  declarations: [
+    InputComponent, 
+    MoneyLabelComponent, 
+    InputDateComponent 
+  ],
+  providers:[
+    AuthGuard,
+    AuthenticationService, 
+    { provide: HTTP_INTERCEPTORS, useClass: UnAuthorizedInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
   imports: [
     CommonModule,
     BrowserModule,

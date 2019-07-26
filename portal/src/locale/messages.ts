@@ -42,7 +42,8 @@ export class Messages{
         ['login.email.required','e-mail is required'],
         ['login.email.emailError','you must provide a valid e-mail address'],
         ['login.password.required','password is required'],
-        ['login.password.minlength', 'password must contain at least ']
+        ['login.password.minlength', 'password must contain at least '],
+        ['login.wrongCredentials', 'email or password incorrect']
     ])
 
     static readonly ptBR: Map<string, string> = new Map<string, string>([
@@ -90,6 +91,7 @@ export class Messages{
         ['login.email.emailError','insira um e-mail válido'],
         ['login.password.required','senha é obrigatória'],
         ['login.password.minlength', 'senha deve conter no minimo '],
+        ['login.wrongCredentials', 'email ou senha incorretos']
     ])
 }
 

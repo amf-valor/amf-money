@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Trade } from '../trading-books/trading-book/trade.model';
 import { Account } from '../home/sign-up/account.model';
 import { TradingBookSettings } from '../trading-books/trading-book-settings/trading-book-settings.model';
+import { Credentials } from '../home/login/credentials.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,12 +47,11 @@ export class PortalApiService {
        {headers: httpHeaders}).pipe(map(()=> {return Observable.create()}))
   }
 
-  post(account: Account): Observable<number>{
+  postAccount(account: Account): Observable<number>{
     const httpHeaders = { 'Content-Type': 'application/json'}
     return this.httpClient.post<number>(
       `${environment.PORTAL_API_ADDRESS}/v1/accounts`,
        JSON.stringify(account),
        {headers: httpHeaders})
   }
-
 }

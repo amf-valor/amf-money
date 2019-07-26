@@ -100,7 +100,8 @@ export class SignUpComponent implements OnInit {
       password: this.signUpForm.get(this.password).value,
       pin: this.signUpForm.get(this.pin).value 
     }
-    this.portalApiService.post(account)
+    
+    this.portalApiService.postAccount(account)
         .subscribe(() => {
           this.router.navigate(['./tradingBooks']);
         }, err => {

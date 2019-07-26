@@ -17,7 +17,8 @@
       <button mat-button i18n=@@login.forgotPasswordButton.text>Forgot password?</button>
       <button 
         [disabled]="!loginForm.valid" 
-        mat-raised-button color="primary">Login</button>
+        mat-raised-button color="primary"
+        (click)="onLoginButtonClick()">Login</button>
     </div>
   </form>
   
