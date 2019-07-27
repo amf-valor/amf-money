@@ -1,7 +1,9 @@
 ﻿using AmfValor.AmfMoney.PortalApi.Data;
+using AmfValor.AmfMoney.PortalApi.Data.Model;
 using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 
 namespace AmfValor.AmfMoney.PortalApi
 {
@@ -41,6 +44,7 @@ namespace AmfValor.AmfMoney.PortalApi
                 ClockSkew = TimeSpan.Zero,
             };
 
+            services.AddHttpContextAccessor();
             services.AddDbContext<AmfMoneyContext>(options => options.UseMySql(connectionString));
             services.AddTransient<ITradingBookService, TradingBookService>();
             services.AddTransient<IAccountService, AccountService>();
@@ -74,6 +78,12 @@ namespace AmfValor.AmfMoney.PortalApi
             });
 
 
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<TradingBookEntity, TradingBook>();
+            });
+            
+            services.AddSingleton(config.CreateMapper());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

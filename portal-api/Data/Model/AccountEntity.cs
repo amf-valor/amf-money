@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmfValor.AmfMoney.PortalApi.Data.Model
@@ -20,5 +21,6 @@ namespace AmfValor.AmfMoney.PortalApi.Data.Model
         public byte[] HashedPin { get; set; }
         [Required]
         public byte[] PinSalt { get; set; }
+        public ICollection<TradingBookEntity> TradingBookEntities { get; set; }
     }
 }

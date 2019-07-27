@@ -59,20 +59,20 @@ namespace AmfValor.AmfMoney.PortalApi.Services
 
             if (isValid)
             {
-                token = Create(credential.Email);
+                token = Create(account.Id);
             }
 
             return isValid;
         }
 
-        private Token Create(string email)
+        private Token Create(int accountId)
         {
             ClaimsIdentity identity = new ClaimsIdentity(
-                    new GenericIdentity(email, "Email"),
+                    new GenericIdentity(accountId.ToString(), "id"),
                     new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, email)
+                        new Claim(JwtRegisteredClaimNames.NameId, accountId.ToString())
                     });
 
             var handler = new JwtSecurityTokenHandler();

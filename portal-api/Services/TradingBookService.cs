@@ -1,4 +1,5 @@
 using AmfValor.AmfMoney.PortalApi.Data;
+using AmfValor.AmfMoney.PortalApi.Data.Model;
 using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
 using Microsoft.EntityFrameworkCore;
@@ -8,52 +9,32 @@ using System.Linq;
 
 namespace AmfValor.AmfMoney.PortalApi.Services
 {
-    public class TradingBookService : ITradingBookService, IDisposable
+    public class TradingBookService : Service, ITradingBookService
     {
-        private readonly AmfMoneyContext _context;
-        public TradingBookService(AmfMoneyContext context)
+        public TradingBookService(AmfMoneyContext context): base(context) { }
+        public TradingBookEntity Create(int accountId, TradingBookSetting setting)
         {
-            _context = context;
-        }
+            AccountEntity account = _context.Accounts.Find(accountId);
 
-        public TradingBook Create(TradingBookSetting setting)
-        {
-            TradingBook toBeAdded;
+            if (account == null)
+            {
+                throw new AccountNotFoundException($"Account with id: {accountId} does not exists");
+            }
 
-            _context.TradingBooks.Add(toBeAdded = new TradingBook()
+            TradingBookEntity toBeAdded = new TradingBookEntity()
             {
                 Setting = setting,
-                CreatedAt = DateTime.UtcNow
-            });  
+                CreatedAt = DateTime.UtcNow,
+                AccountEntityId = account.Id
+            };
 
+            _context.TradingBooks.Add(toBeAdded);
             _context.SaveChanges();
             return toBeAdded;
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    _context.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
-
         public void Update(int tradingBookId, ICollection<Trade> trades)
         {
-            TradingBook tradingBook = _context.TradingBooks
+            TradingBookEntity tradingBook = _context.TradingBooks
                 .Where(tb => tb.Id == tradingBookId)
                 .Include(tb => tb.Trades)
                 .FirstOrDefault();
@@ -85,17 +66,16 @@ namespace AmfValor.AmfMoney.PortalApi.Services
 
             _context.SaveChanges();
         }
-
-        public ICollection<TradingBook> GetAll()
+        public ICollection<TradingBookEntity> GetAll(int accountId)
         {
             return _context.TradingBooks
+                    .Where(tb => tb.AccountEntityId == accountId)
                     .Include(t => t.Trades)
                     .ToList();
         }
-
         public void Update(int tradingBookId, TradingBookSetting setting)
         {
-            TradingBook tradingBook = _context.TradingBooks
+            TradingBookEntity tradingBook = _context.TradingBooks
                 .Where(tb => tb.Id == tradingBookId)
                 .FirstOrDefault();
 
@@ -105,6 +85,5 @@ namespace AmfValor.AmfMoney.PortalApi.Services
             tradingBook.Setting = setting;
             _context.SaveChanges();
         }
-
     }
 }

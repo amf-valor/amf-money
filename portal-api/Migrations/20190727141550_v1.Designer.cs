@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AmfValor.AmfMoney.PortalApi.Migrations
 {
     [DbContext(typeof(AmfMoneyContext))]
-    [Migration("20190723151104_v1")]
+    [Migration("20190727141550_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,6 +52,26 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Data.Model.TradingBookEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccountEntityId")
+                        .HasColumnName("AccountId");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountEntityId");
+
+                    b.ToTable("TradingBooks");
+                });
+
             modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.Trade", b =>
                 {
                     b.Property<int>("Id")
@@ -76,42 +96,25 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     b.Property<decimal>("StopLoss")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<int?>("TradingBookId");
+                    b.Property<int?>("TradingBookEntityId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TradingBookId");
+                    b.HasIndex("TradingBookEntityId");
 
                     b.ToTable("Trades");
                 });
 
-            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.TradingBook", b =>
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Data.Model.TradingBookEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.HasOne("AmfValor.AmfMoney.PortalApi.Data.Model.AccountEntity")
+                        .WithMany("TradingBookEntities")
+                        .HasForeignKey("AccountEntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TradingBooks");
-                });
-
-            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.Trade", b =>
-                {
-                    b.HasOne("AmfValor.AmfMoney.PortalApi.Model.TradingBook")
-                        .WithMany("Trades")
-                        .HasForeignKey("TradingBookId");
-                });
-
-            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.TradingBook", b =>
-                {
                     b.OwnsOne("AmfValor.AmfMoney.PortalApi.Model.TradingBookSetting", "Setting", b1 =>
                         {
-                            b1.Property<int>("TradingBookId");
+                            b1.Property<int>("TradingBookEntityId");
 
                             b1.Property<decimal>("AmountPerCaptal")
                                 .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
@@ -137,15 +140,22 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                                 .HasColumnName("TotalCaptal")
                                 .HasColumnType("decimal(18,2)");
 
-                            b1.HasKey("TradingBookId");
+                            b1.HasKey("TradingBookEntityId");
 
                             b1.ToTable("TradingBooks");
 
-                            b1.HasOne("AmfValor.AmfMoney.PortalApi.Model.TradingBook")
+                            b1.HasOne("AmfValor.AmfMoney.PortalApi.Data.Model.TradingBookEntity")
                                 .WithOne("Setting")
-                                .HasForeignKey("AmfValor.AmfMoney.PortalApi.Model.TradingBookSetting", "TradingBookId")
+                                .HasForeignKey("AmfValor.AmfMoney.PortalApi.Model.TradingBookSetting", "TradingBookEntityId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
+                });
+
+            modelBuilder.Entity("AmfValor.AmfMoney.PortalApi.Model.Trade", b =>
+                {
+                    b.HasOne("AmfValor.AmfMoney.PortalApi.Data.Model.TradingBookEntity")
+                        .WithMany("Trades")
+                        .HasForeignKey("TradingBookEntityId");
                 });
 #pragma warning restore 612, 618
         }

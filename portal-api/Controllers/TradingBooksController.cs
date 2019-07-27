@@ -1,8 +1,13 @@
-﻿using AmfValor.AmfMoney.PortalApi.Model;
+﻿using AmfValor.AmfMoney.PortalApi.Data.Model;
+using AmfValor.AmfMoney.PortalApi.Model;
 using AmfValor.AmfMoney.PortalApi.Services.Contract;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace AmfValor.AmfMoney.PortalApi.Controllers
 {
@@ -12,18 +17,26 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
     public class TradingBooksController : ControllerBase
     {
         private readonly ITradingBookService _service;
-        public TradingBooksController(ITradingBookService service)
+        private readonly IMapper _mapper;
+        private readonly int _accountId;
+        public TradingBooksController(ITradingBookService service, 
+            IMapper mapper, 
+            IHttpContextAccessor httpContextAccessor)
         {
+            _mapper = mapper;
             _service = service;
+            _accountId = Convert.ToInt32(httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] TradingBookSetting theSetting)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
-
-            TradingBook created = _service.Create(theSetting);
+            }
+            
+            TradingBookEntity created = _service.Create(_accountId, theSetting);
             return Ok(new { id = created.Id });
         }
 
@@ -39,7 +52,15 @@ namespace AmfValor.AmfMoney.PortalApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get() => Ok(_service.GetAll());
+        public IActionResult Get()
+        {
+            var tradingBookEntities = _service.GetAll(_accountId);
+
+            ICollection<TradingBook> all = 
+                _mapper.Map<ICollection<TradingBookEntity>, ICollection<TradingBook>>(tradingBookEntities);
+
+            return Ok(all);
+        }
 
         [HttpPut]
         [Route("{id}/settings")]

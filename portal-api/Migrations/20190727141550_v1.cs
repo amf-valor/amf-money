@@ -38,11 +38,18 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     RiskRewardRatio = table.Column<sbyte>(type: "tinyint(1)", nullable: false),
                     TotalCaptal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RiskPerTrade = table.Column<decimal>(type: "decimal(2,2)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
+                    CreatedAt = table.Column<DateTime>(type: "timestamp", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    AccountId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TradingBooks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TradingBooks_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,35 +64,40 @@ namespace AmfValor.AmfMoney.PortalApi.Migrations
                     Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     StopLoss = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     StopGain = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    TradingBookId = table.Column<int>(nullable: true)
+                    TradingBookEntityId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Trades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Trades_TradingBooks_TradingBookId",
-                        column: x => x.TradingBookId,
+                        name: "FK_Trades_TradingBooks_TradingBookEntityId",
+                        column: x => x.TradingBookEntityId,
                         principalTable: "TradingBooks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trades_TradingBookId",
+                name: "IX_Trades_TradingBookEntityId",
                 table: "Trades",
-                column: "TradingBookId");
+                column: "TradingBookEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TradingBooks_AccountId",
+                table: "TradingBooks",
+                column: "AccountId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Accounts");
-
-            migrationBuilder.DropTable(
                 name: "Trades");
 
             migrationBuilder.DropTable(
                 name: "TradingBooks");
+
+            migrationBuilder.DropTable(
+                name: "Accounts");
         }
     }
 }

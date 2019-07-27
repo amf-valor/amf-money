@@ -9,7 +9,6 @@ namespace AmfValor.AmfMoney.PortalApi.Model
         public int Id { get; set; }
         public TradingBookSetting Setting { get; set; }
         public ICollection<Trade> Trades { get; set; }
-        public DateTime CreatedAt { get; set; }
         public TradingBook()
         {
             Trades = new List<Trade>();

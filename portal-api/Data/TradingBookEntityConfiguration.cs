@@ -1,12 +1,12 @@
-﻿using AmfValor.AmfMoney.PortalApi.Model;
+﻿using AmfValor.AmfMoney.PortalApi.Data.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AmfValor.AmfMoney.PortalApi.Data
 {
-    public class TradingBookConfiguration : IEntityTypeConfiguration<TradingBook>
+    public class TradingBookEntityConfiguration : IEntityTypeConfiguration<TradingBookEntity>
     {
-        public void Configure(EntityTypeBuilder<TradingBook> builder)
+        public void Configure(EntityTypeBuilder<TradingBookEntity> builder)
         {
             builder.HasKey(t => t.Id);
 
