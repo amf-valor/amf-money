@@ -2,12 +2,19 @@
   class="content"
   fxLayoutAlign="center center">
   <mat-card>
+    <mat-progress-bar mode="indeterminate" *ngIf="isProgressVisible"></mat-progress-bar>
     <mat-tab-group>
       <mat-tab i18n-label=@@home.signUpTab.label label="Sign - Up"> 
-        <amp-sign-up></amp-sign-up> 
+        <amp-sign-up
+          (onSignUpStarted)="showProgress()"
+          (onSignUpFinished)="hideProgress()">
+        </amp-sign-up> 
       </mat-tab>
       <mat-tab label="Login"> 
-        <amp-login></amp-login> 
+        <amp-login 
+          (onLoginStarted)="showProgress()"
+          (onLoginFinished)="hideProgress()">
+        </amp-login> 
       </mat-tab>
     </mat-tab-group>
   </mat-card>

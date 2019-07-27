@@ -229,15 +229,14 @@ export class TradingBookComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(newSettings => {
       if(newSettings !== undefined){
-        this.tradingBook.setting = newSettings
-        this.initGridContext();
-        // this.portalApiService.updateSettings(this.tradingBook.id, newSettings)
-        //   .subscribe(() => {
-        //     this.tradingBook.setting = newSettings
-        //     this.utilsService.showMessage("configurações atualizadas com sucesso!")
-        //   }, err => {
-        //     this.utilsService.showNetworkError()
-        //   })    
+        this.portalApiService.updateSettings(this.tradingBook.id, newSettings)
+          .subscribe(() => {
+            this.tradingBook.setting = newSettings
+            this.initGridContext();
+            this.utilsService.showMessage("configurações atualizadas com sucesso!")
+          }, err => {
+            this.utilsService.showNetworkError()
+          })    
       }
     })
   }

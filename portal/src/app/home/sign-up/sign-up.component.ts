@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/services/message.service';
 import { PortalApiService } from 'src/app/services/portal-api.service';
 import { Account } from '../sign-up/account.model'
 import { UtilsService } from 'src/app/services/utils.service';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'amp-sign-up',
@@ -12,9 +13,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  signUpForm: FormGroup;
+  controlErrorMessages: Map<string, Map<string, string>>;
+  @Output() onSignUpStarted =  new EventEmitter();
+  @Output() onSignUpFinished =  new EventEmitter();
 
-  signUpForm: FormGroup
-  controlErrorMessages: Map<string, Map<string, string>>
 
   constructor(private formBuilder: FormBuilder, 
     private messageService: MessageService,
@@ -101,16 +104,21 @@ export class SignUpComponent implements OnInit {
       pin: this.signUpForm.get(this.pin).value 
     }
     
+    this.onSignUpStarted.emit();
+
     this.portalApiService.postAccount(account)
-        .subscribe(() => {
-          this.router.navigate(['./tradingBooks']);
-        }, err => {
-          if(err.status == 409){
-            this.utilsService.showMessage(this.messageService.get('signUp.email.alreadyExists'))
-          }else{
-            this.utilsService.showNetworkError()
-          }
-        }) 
+      .pipe(
+        finalize(() => this.onSignUpFinished.emit())
+      )
+      .subscribe(() => {
+        this.router.navigate(['./tradingBooks']);
+      }, err => {
+        if(err.status == 409){
+          this.utilsService.showMessage(this.messageService.get('signUp.email.alreadyExists'))
+        }else{
+          this.utilsService.showNetworkError()
+        }
+      }) 
   }
 
 }

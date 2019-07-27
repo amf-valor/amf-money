@@ -1,11 +1,11 @@
-import { Component} from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/services/message.service';
 import { Credentials } from './credentials.model';
 import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
-
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'amp-login',
   templateUrl: './login.component.html',
@@ -14,6 +14,9 @@ import { AuthenticationService } from 'src/app/shared/authentication.service';
 export class LoginComponent{
   loginForm: FormGroup
   controlErrorMessages: Map<string, Map<string, string>>
+
+  @Output() onLoginStarted =  new EventEmitter();
+  @Output() onLoginFinished =  new EventEmitter();
 
   get passwordMinLength(): number {
     return 8;
@@ -32,7 +35,7 @@ export class LoginComponent{
     private messageService: MessageService,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private utilsService: UtilsService){ 
+    private utilsService: UtilsService){
       if(this.authenticationService.currentToken){
         this.router.navigate(['./tradingBooks'])
       }
@@ -68,15 +71,20 @@ export class LoginComponent{
       password: this.loginForm.get(this.password).value, 
     }
 
+    this.onLoginStarted.emit();
+
     this.authenticationService.postCredentials(credentials)
-        .subscribe(() => {
-          this.router.navigate(['./tradingBooks']);
-        }, err => {
-          if(err.status == 401){
-            this.utilsService.showMessage(this.messageService.get('login.wrongCredentials'))
-          }else{
-            this.utilsService.showNetworkError()
-          }
-        })  
+      .pipe(
+        finalize(() => this.onLoginFinished.emit())
+      )
+      .subscribe(() => {
+        this.router.navigate(['./tradingBooks']);
+      }, err => {
+        if(err.status == 401){
+          this.utilsService.showMessage(this.messageService.get('login.wrongCredentials'))
+        }else{
+          this.utilsService.showNetworkError()
+        }
+      })  
   }
 }
