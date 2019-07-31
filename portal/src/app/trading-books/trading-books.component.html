@@ -1,5 +1,8 @@
+<div *ngIf="isProgressVisible" class="content" fxLayoutAlign="center center">
+    <mat-spinner></mat-spinner>
+</div>
 <section 
-    *ngIf="tradingBooks.length == 0;else contentHasBooks" 
+    *ngIf="!isProgressVisible && tradingBooks.length == 0;else contentHasBooks" 
     class="content"
     fxLayoutAlign="center center">
     

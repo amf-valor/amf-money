@@ -19,6 +19,58 @@ export class TradingBookSettingsComponent implements OnInit {
 
   bookSettingsForm: FormGroup
   controlErrorMessages: Map<string, Map<string, string>>
+
+  get bookName(): string{
+    return TradingBookSettingsComponent.BOOK_NAME
+  }
+
+  get amountPerCaptal(): string{
+    return TradingBookSettingsComponent.AMOUNT_PER_CAPTAL
+  }
+
+  get riskRewardRatio(): string{
+    return TradingBookSettingsComponent.RISK_REWARD_RATIO
+  }
+
+  get riskPerTrade(): string{
+    return TradingBookSettingsComponent.RISK_PER_TRADE
+  }
+
+  get amountPerCaptalMin(): number{
+    return 1
+  }
+
+  get amountPerCaptalMax(): number{
+    return 50
+  }
+
+  get riskRewardRatioMin(): number{
+    return 2
+  }
+
+  get riskRewardRatioMax(): number{
+    return 9999
+  }
+
+  get riskPerTradeMin(): number{
+    return 0.01
+  }
+
+  get riskPerTradeMax(): number{
+    return 100
+  }
+
+  get totalCaptal() : string {
+    return TradingBookSettingsComponent.TOTAL_CAPTAL
+  }
+
+  get totalCaptalMin(): number{
+    return 1
+  }
+
+  get totalCaptalMax(): number{
+    return 99999999999999999
+  }
   
   constructor(
     private dialogRef: MatDialogRef<TradingBookSettingsComponent>, 
@@ -105,7 +157,6 @@ export class TradingBookSettingsComponent implements OnInit {
     })
   }
 
-
   onNoBtnClick(): void{
     this.dialogRef.close();
   }
@@ -121,57 +172,4 @@ export class TradingBookSettingsComponent implements OnInit {
     }
     this.dialogRef.close(settings)
   }
-
-  get bookName(): string{
-    return TradingBookSettingsComponent.BOOK_NAME
-  }
-
-  get amountPerCaptal(): string{
-    return TradingBookSettingsComponent.AMOUNT_PER_CAPTAL
-  }
-
-  get riskRewardRatio(): string{
-    return TradingBookSettingsComponent.RISK_REWARD_RATIO
-  }
-
-  get riskPerTrade(): string{
-    return TradingBookSettingsComponent.RISK_PER_TRADE
-  }
-
-  get amountPerCaptalMin(): number{
-    return 1
-  }
-
-  get amountPerCaptalMax(): number{
-    return 50
-  }
-
-  get riskRewardRatioMin(): number{
-    return 2
-  }
-
-  get riskRewardRatioMax(): number{
-    return 9999
-  }
-
-  get riskPerTradeMin(): number{
-    return 0.01
-  }
-
-  get riskPerTradeMax(): number{
-    return 100
-  }
-
-  get totalCaptal() : string {
-    return TradingBookSettingsComponent.TOTAL_CAPTAL
-  }
-
-  get totalCaptalMin(): number{
-    return 1
-  }
-
-  get totalCaptalMax(): number{
-    return 99999999999999999
-  }
-
 }

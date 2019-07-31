@@ -192,8 +192,9 @@ export class TradingBookComponent implements OnInit {
 
   onSyncBtnClick(){
     const trades: Trade[] = [];
+
     this.gridApi.forEachNode(node => {
-      trades.push({
+      const trade:Trade = {
         id: node.data.id,
         operationType: node.data.operationType,
         asset: node.data.asset,
@@ -201,7 +202,11 @@ export class TradingBookComponent implements OnInit {
         price: node.data.price,
         stopGain: node.data.stopGain,
         stopLoss: node.data.stopLoss
-      })
+      };
+      
+      if(this.isValidTrade(trade)){
+        trades.push(trade)
+      }
     });
 
     this.portalApiService.updateTrades(this.tradingBook.id, trades)
@@ -210,7 +215,6 @@ export class TradingBookComponent implements OnInit {
           this.messageService.get('tradingBook.sync.success')
         )
       }, err => {
-        console.log(err)
         this.utilsService.showNetworkError()
       })
   }
@@ -233,11 +237,41 @@ export class TradingBookComponent implements OnInit {
           .subscribe(() => {
             this.tradingBook.setting = newSettings
             this.initGridContext();
-            this.utilsService.showMessage("configurações atualizadas com sucesso!")
+            this.utilsService.showMessage(
+              this.messageService.get('tradingBook.updateSettings.success')
+            )
           }, err => {
             this.utilsService.showNetworkError()
           })    
       }
     })
+  }
+
+  private isValidTrade(trade: Trade): boolean{
+    if(trade.operationType === ''){
+      return false;
+    }
+
+    if(trade.asset === ''){
+      return false;
+    }
+
+    if(trade.price <= 0){
+      return false;
+    }
+
+    if(trade.quantity <= 0){
+      return false;
+    }
+
+    if (trade.stopGain <= 0){
+      return false;
+    }
+
+    if(trade.stopLoss <=0){
+      return false;
+    }
+
+    return true;  
   }
 }

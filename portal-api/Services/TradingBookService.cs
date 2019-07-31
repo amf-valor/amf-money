@@ -42,6 +42,8 @@ namespace AmfValor.AmfMoney.PortalApi.Services
             if (tradingBook == null)
                 throw new TradingBookNotFoundException($"trading book with id {tradingBookId} was not found!");
 
+            var newTrades = new List<Trade>();
+
             foreach (var trade in trades) 
             {
                 var existingTrade = tradingBook.Trades
@@ -50,11 +52,19 @@ namespace AmfValor.AmfMoney.PortalApi.Services
 
                 if (existingTrade == null)
                 {
-                    tradingBook.Trades.Add(trade);
+                    newTrades.Add(trade);
                 }
                 else
                 {
                     _context.Entry(existingTrade).CurrentValues.SetValues(trade);
+                }
+            }
+
+            if (newTrades.Count > 0)
+            {
+                foreach (var newTrade in newTrades)
+                {
+                    tradingBook.Trades.Add(newTrade);
                 }
             }
 

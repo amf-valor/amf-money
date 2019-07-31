@@ -6,6 +6,7 @@ import { Account } from '../sign-up/account.model'
 import { UtilsService } from 'src/app/services/utils.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
 
 @Component({
   selector: 'amp-sign-up',
@@ -23,7 +24,8 @@ export class SignUpComponent implements OnInit {
     private messageService: MessageService,
     private portalApiService: PortalApiService,
     private utilsService: UtilsService,
-    private router: Router) { }
+    private router: Router,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.initSignUpForm()
@@ -111,7 +113,11 @@ export class SignUpComponent implements OnInit {
         finalize(() => this.onSignUpFinished.emit())
       )
       .subscribe(() => {
-        this.router.navigate(['./tradingBooks']);
+        this.authenticationService.postCredentials({email: account.email, password: account.password})
+          .subscribe(
+            () => this.router.navigate(['./tradingBooks']),
+            err => this.utilsService.showNetworkError()
+          )
       }, err => {
         if(err.status == 409){
           this.utilsService.showMessage(this.messageService.get('signUp.email.alreadyExists'))

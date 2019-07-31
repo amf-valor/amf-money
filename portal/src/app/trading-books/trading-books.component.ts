@@ -5,13 +5,15 @@ import { TradingBook } from './trading-book/trading-book.model';
 import { PortalApiService } from '../services/portal-api.service';
 import { UtilsService } from '../services/utils.service';
 import { MessageService } from '../services/message.service';
+import { BaseComponent } from '../shared/base.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'amp-trading-books',
   templateUrl: './trading-books.component.html',
   styleUrls: ['./trading-books.component.css']
 })
-export class TradingBooksComponent implements OnInit {
+export class TradingBooksComponent extends BaseComponent implements OnInit {
 
   tradingBooks : TradingBook[]
 
@@ -19,10 +21,18 @@ export class TradingBooksComponent implements OnInit {
     private dialog: MatDialog, 
     private portalApiService: PortalApiService,
     private utilsService: UtilsService,
-    private messageService: MessageService){ }
+    private messageService: MessageService){ 
+      super();
+      this.tradingBooks = [];
+    }
 
   ngOnInit(){
+    this.showProgress()
+    
     this.portalApiService.getAllTradingBooks()
+      .pipe(
+        finalize(() => this.hideProgress())
+      )
       .subscribe(tradingBooks => {
         this.tradingBooks = tradingBooks
       }, err => {
