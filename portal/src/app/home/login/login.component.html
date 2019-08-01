@@ -14,7 +14,10 @@
       [controlName]=password>
     </amp-input>
     <div fxLayoutAlign="end end" fxLayoutGap="1rem">
-      <button mat-button i18n=@@login.forgotPasswordButton.text>Forgot password?</button>
+      <button 
+        mat-button i18n=@@login.forgotPasswordButton.text
+        (click)="onForgotPaswwordButtonClick()">Forgot password?
+      </button>
       <button 
         [disabled]="!loginForm.valid" 
         mat-raised-button color="primary"

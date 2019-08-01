@@ -15,6 +15,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SignUpComponent } from './home/sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './home/login/login.component';
+import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { LoginComponent } from './home/login/login.component';
     SignUpComponent,
     HomeComponent,
     LoginComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -42,7 +44,8 @@ import { LoginComponent } from './home/login/login.component';
     ])
   ],
   entryComponents:[
-    TradingBookSettingsComponent
+    TradingBookSettingsComponent,
+    ForgotPasswordComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

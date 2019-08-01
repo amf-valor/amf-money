@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { finalize } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 @Component({
   selector: 'amp-login',
   templateUrl: './login.component.html',
@@ -35,7 +37,8 @@ export class LoginComponent{
     private messageService: MessageService,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private utilsService: UtilsService){
+    private utilsService: UtilsService,
+    public dialog: MatDialog){
       if(this.authenticationService.currentToken){
         this.router.navigate(['./tradingBooks'])
       }
@@ -86,5 +89,9 @@ export class LoginComponent{
           this.utilsService.showNetworkError()
         }
       })  
+  }
+
+  onForgotPaswwordButtonClick(): void{
+    this.dialog.open(ForgotPasswordComponent);
   }
 }
