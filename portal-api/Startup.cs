@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 
 namespace AmfValor.AmfMoney.PortalApi
 {
@@ -31,7 +30,7 @@ namespace AmfValor.AmfMoney.PortalApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["MySqlConnection:local"];
+            var connectionString = Configuration["ConnectionStrings:AmfMoney"];
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
