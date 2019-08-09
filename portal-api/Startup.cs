@@ -101,7 +101,7 @@ namespace AmfValor.AmfMoney.PortalApi
 
             app.UseAuthentication();
             app.UseCors(corsPolicyName);
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
