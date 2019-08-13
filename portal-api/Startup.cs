@@ -53,7 +53,7 @@ namespace AmfValor.AmfMoney.PortalApi
             {
                 options.AddPolicy(corsPolicyName, builder => 
                 {
-                    builder.WithOrigins("http://localhost:4200")
+                    builder.WithOrigins("http://localhost:4200", "http://amf-money.s3-website-sa-east-1.amazonaws.com/")
                            .AllowAnyHeader()
                            .AllowAnyMethod();
                 });

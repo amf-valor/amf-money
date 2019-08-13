@@ -19,6 +19,7 @@ namespace AmfValor.AmfMoney.PortalApi
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
+                    config.AddEnvironmentVariables();
                     config.SetBasePath(Directory.GetCurrentDirectory());
                     config.AddJsonFile(
                         "appsettings.json", optional: true, reloadOnChange: true)
